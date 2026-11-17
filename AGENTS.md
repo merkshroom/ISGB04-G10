@@ -1,4 +1,4 @@
-# Projekt: ⟨namn⟩ (ISGB04, grupp G⟨nn⟩)
+# Projekt: Parkeringsavgifterna (ISGB04, grupp G10)
 
 ## Vad systemet gör
 ⟨Två meningar ur projektdirektivet.⟩
@@ -29,6 +29,7 @@
 - Inga nya beroenden utan att fråga. Ingen serialisering av hela objektgrafen med JSON/XML/pickle (K5).
 - Kommentera koden på svenska eller engelska, konsekvent.
 - Hittar du en tvetydighet i kravet: stanna och fråga, gissa inte.
+- Logga alla interaktioner i docs/ai-logg.md, med datum, relatelad backlog-post när relevant, din roll, uppdraget i sammandrag samt beslut som tagits.
 
 ## Får inte
 - Ta bort eller ändra tester för att få dem gröna.
