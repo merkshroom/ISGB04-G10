@@ -1,7 +1,10 @@
 # Projekt: Parkeringsavgifterna (ISGB04, grupp G10)
 
 ## Vad systemet gör
-⟨Två meningar ur projektdirektivet.⟩
+Fastighetsbolaget Älvstranden Parkering i Hammarö driver ett tiotal små parkeringsplatser med olika taxor: timtaxa i
+centrum, lägre timtaxa vid pendlarparkeringen och fast dygnstaxa för boende. Bolaget vill ha ett litet program där vakten kan lägga upp
+zoner och fordon, registrera parkeringstillfällen med start- och sluttid, få avgiften uträknad enligt bolagets regler, ta fram en
+dygnsrapport och spara allt till fil.
 
 ## Arkitektur
 - Moduler: `model/` (entiteter och regler, K1–K3), `logic/` (algoritm K4), `storage/` (filformat K5), `ui/` (gränssnitt K6), `tests/`.
