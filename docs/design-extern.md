@@ -1,7 +1,7 @@
 # Extern designspecifikation – Parkeringsavgifterna (K6)
 
 Projektgrupp G10, ISGB04 Programutveckling, Karlstads universitet, HT 2026
-Version 1.1 (för granskning av TPL), 2026-11-20
+Version 1.1, godkänd av PO 2026-11-20
 
 **Ändringslogg**
 
