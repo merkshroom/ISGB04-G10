@@ -23,7 +23,7 @@ dygnsrapport och spara allt till fil.
 - Syftet är enkelhet: snabbare felsökning, möjlig testning, stabilare kod, enklare ändringar och bättre spårbarhet.
 
 ## Språk och verktyg
-- Språk: ⟨…⟩, version ⟨…⟩. Testramverk: ⟨…⟩.
+- Språk: JavaScript (ECMAScript 2022+), React 19, Node.js 22 LTS eller senare. Testramverk: Vitest och React Testing Library.
 - Starta: `⟨kommando⟩`. Testa: `⟨kommando⟩`. Kör testerna efter varje ändring och rapportera resultatet.
 
 ## Regler för ändringar
