@@ -1,9 +1,16 @@
 # Extern designspecifikation – Parkeringsavgifterna (K6)
 
 Projektgrupp G10, ISGB04 Programutveckling, Karlstads universitet, HT 2026
-Version 1.0 (utkast för granskning av TPL), 2026-11-20
+Version 1.1 (för granskning av TPL), 2026-11-20
 
-Markeringen **(förslag, Ö*n*)** betyder att designen bygger på ett förslag som väntar på PO-beslut. Frågorna finns i avsnitt 1.4.
+**Ändringslogg**
+
+| Version | Datum | Ändring |
+|---|---|---|
+| 1.1 | 2026-11-20 | PO-beslut för Ö1 och Ö3–Ö7 är införda, och markeringarna "förslag" är borttagna. Avsnitt 1.4 innehåller bara Ö2. Alla exempel bygger på direktivets räkneexempel (tillfälle 1–8), som nu finns i avsnitt 3. V18 har fått ett exempel på Ö7. F23 heter nu F22, så numreringen saknar lucka. |
+| 1.0 | 2026-11-20 | Första utkast. |
+
+Den enda öppna frågan, Ö2, finns i avsnitt 1.4.
 
 ---
 
@@ -46,7 +53,7 @@ Därför visas avgift och status alltid tydligt, och det finns inget fält där 
 └──────────────────────────────────────────────────────────────────────┘
 ```
 
-- **Rubrikrad:** visar programmets namn. Indikatorn "● Osparade ändringar" syns när det finns ändringar sedan senaste Spara eller Öppna **(förslag, Ö6)**.
+- **Rubrikrad:** visar programmets namn. Indikatorn "● Osparade ändringar" syns när det finns ändringar sedan senaste Spara eller Öppna.
 - **Menyrad:** samma åtta val i samma ordning i alla vyer. Den aktiva vyn är markerad. Menyraden går att använda hela tiden, utom när en bekräftelsedialog är öppen.
 - **Meddelanderuta:** alltid på samma plats.
   - Kvitton börjar med "Klart:" och visas i grönt.
@@ -72,13 +79,7 @@ Därför visas avgift och status alltid tydligt, och det finns inget fält där 
 
 ### 1.4 Öppna frågor till PO
 
-1. **Ändring av zoner och fordon.** Får zonkod, zontyp och registreringsnummer ändras, eller bara zonens gatunamn och fordonets beskrivning? Designen visar i dag bara minimikravet, gatunamn och beskrivning, och övriga fält är låsta (V4, V8).
-2. **Zonkodens format.** Finns det en formatregel för zonkoden, och likställs stora och små bokstäver? I väntan på beställarens svar kontrolleras bara att fältet inte är tomt och att zonkoden inte redan finns. Felmeddelande F23 får sin text när frågan är besvarad.
-3. **Registrera betalning.** Behöver användaren mata in något? Förslag: inga indata, bara en bekräftelse (V14).
-4. **Spara och öppna.** Förslag: användaren väljer fil själv. Spara ger en nedladdning med ett filnamn som användaren anger (V19). Öppna använder webbläsarens filväljare (V20).
-5. **Avsluta.** Förslag: en egen avslutningsvy som påminner om att spara och sedan säger att fliken kan stängas (V21).
-6. **Osparade ändringar.** Förslag: ja, varna både vid Avsluta och vid Öppna och visa indikatorn i rubrikraden. Webbläsarens egen varning när fliken stängs visas också, men den texten styr webbläsaren.
-7. **Start och Slut i dygnsrapporten.** Direktivets exempel visar bara klockslag. Hur visas ett tillfälle som började ett annat datum än rapportdatumet? Förslag: visa då "ÅÅÅÅ-MM-DD HH:MM" i kolumnen Start och bara klockslag i övriga fall.
+- **Ö2 Zonkodens format.** Väntar på beställarens svar. Finns det en formatregel för zonkoden, och likställs stora och små bokstäver? Tills vidare kontrolleras bara att fältet inte är tomt och att zonkoden inte redan finns. Felmeddelande F22 får sin text när frågan är besvarad.
 
 ---
 
@@ -117,13 +118,28 @@ V2 Zoner  V6 Fordon    V10 Tillfällen    V18 Dygnsrapport  V19 Spara V20 Öppna
 4. **Tillfällen.** Ett tillfälle hanteras via V12 Hantera tillfälle. Dit kommer användaren med radknappen **Välj** i V10 Tillfällen eller i V17 Tillfällen för ett fordon. Från V12 når användaren de fyra tillståndsoperationerna: Avsluta tillfälle, Registrera betalning, Rätta starttid och Ändra sluttid. **Tillbaka** leder till listan som användaren kom ifrån.
 5. **Bekräftelser.** Ta bort, Registrera betalning och varningar för osparade ändringar visas som dialoger som måste besvaras. Medan en dialog är öppen är menyraden spärrad. **Avbryt** stänger alltid dialogen utan ändringar.
 6. **Spara och Öppna.** Kan väljas när som helst. Efteråt kommer användaren tillbaka till vyn där valet gjordes.
-7. **Avsluta.** Leder till V21. Där kan användaren spara först, avsluta utan att spara eller avbryta och gå tillbaka till föregående vy. När programmet har avslutats är menyraden spärrad och vyn säger att fliken kan stängas **(förslag, Ö5)**.
+7. **Avsluta.** Leder till V21. Där kan användaren spara först, avsluta utan att spara eller avbryta och gå tillbaka till föregående vy. När programmet har avslutats är menyraden spärrad och vyn säger att fliken kan stängas.
 
 ---
 
 ## 3 En vy per operation (för varje vy: namn, indata, utdata och felmeddelanden)
 
 Felmeddelanden anges med id. Den ordagranna texten finns i avsnitt 4.
+
+**Exempeldata.** Alla exempel och skisser bygger på direktivets räkneexempel, med zonerna A1 Torggatan (A), B2 Pendlarvägen (B) och BO Strandvägen (Boende):
+
+| Nr | Fordon | Zon | Start | Slut | Status | Avgift |
+|---|---|---|---|---|---|---|
+| 1 | AAA 111 | A1 | 2026-11-24 10:00 | 2026-11-24 12:00 | Betalt | 40 kr |
+| 2 | BBB 222 | A1 | 2026-11-24 09:15 | 2026-11-24 20:45 | Betalt | 160 kr |
+| 3 | CCC 333 | B2 | 2026-11-24 22:30 | 2026-11-25 01:15 | Avslutat | 40 kr |
+| 4 | DDD 444 | BO | 2026-11-24 18:00 | 2026-11-26 09:00 | Avslutat | 90 kr |
+| 5 | AAA 111 | B2 | 2026-11-24 13:00 | 2026-11-24 17:00 | Betalt | 40 kr |
+| 6 | CCC 333 | BO | 2026-11-25 23:00 | 2026-11-26 00:00 | Avslutat | 30 kr |
+| 7 | AAA 111 | A1 | 2026-11-26 07:30 | – | Pågående | – |
+| 8 | CCC 333 | A1 | 2026-11-24 07:00 | 2026-11-24 08:10 | Betalt | 40 kr |
+
+Tillfälle 6 slutar exakt 00:00. Vilket rapportdatum det hör till väntar på beställarens svar, så det finns inte med i något rapportexempel.
 
 **Fält som återkommer i flera vyer**
 
@@ -179,13 +195,13 @@ Lägg till zon
 - **Felmeddelanden:**
   - F20: tomt fält eller ingen vald zontyp.
   - F09: zonkoden finns redan.
-  - F23: ogiltig zonkod (Ö2).
+  - F22: ogiltig zonkod (Ö2).
 
 ### V4 Ändra zon
 
 - **Nås från:** V2, radknappen "Ändra".
 - **Indata:**
-  - **Zonkod** och **Zontyp** visas men är låsta **(förslag, Ö1)**.
+  - **Zonkod** och **Zontyp** visas men är låsta.
   - **Gatunamn:** textfält, förifyllt med det nuvarande gatunamnet.
   - Knapparna **Ändra** och **Avbryt**.
 - **Utdata:** kvitto K02. Listan visar det nya gatunamnet.
@@ -224,7 +240,7 @@ Lägg till zon
 
 - **Nås från:** V6, radknappen "Ändra".
 - **Indata:**
-  - **Registreringsnummer** visas men är låst **(förslag, Ö1)**.
+  - **Registreringsnummer** visas men är låst.
   - **Beskrivning:** textfält, förifyllt med den nuvarande beskrivningen.
   - Knapparna **Ändra** och **Avbryt**.
 - **Utdata:** kvitto K05.
@@ -256,10 +272,14 @@ Tillfällen                 [Starta tillfälle] [Visa tillfällen för ett fordo
 ┌────┬─────────┬─────┬──────────────────┬──────────────────┬────────┬───────────┬────────┐
 │ Nr │ Fordon  │ Zon │ Start            │ Slut             │ Avgift │ Status    │        │
 ├────┼─────────┼─────┼──────────────────┼──────────────────┼────────┼───────────┼────────┤
-│ 1  │ CCC 333 │ A1  │ 2026-11-24 07:00 │ 2026-11-24 08:10 │ 40 kr  │ Betalt    │ [Välj] │
-│ 2  │ BBB 222 │ A1  │ 2026-11-24 09:15 │ 2026-11-24 20:45 │ 160 kr │ Avslutat  │ [Välj] │
-│ 3  │ AAA 111 │ A1  │ 2026-11-24 10:00 │ 2026-11-24 12:00 │ 40 kr  │ Avslutat  │ [Välj] │
-│ 4  │ DDD 444 │ BO  │ 2026-11-25 08:30 │ –                │ –      │ Pågående  │ [Välj] │
+│ 1  │ AAA 111 │ A1  │ 2026-11-24 10:00 │ 2026-11-24 12:00 │ 40 kr  │ Betalt    │ [Välj] │
+│ 2  │ BBB 222 │ A1  │ 2026-11-24 09:15 │ 2026-11-24 20:45 │ 160 kr │ Betalt    │ [Välj] │
+│ 3  │ CCC 333 │ B2  │ 2026-11-24 22:30 │ 2026-11-25 01:15 │ 40 kr  │ Avslutat  │ [Välj] │
+│ 4  │ DDD 444 │ BO  │ 2026-11-24 18:00 │ 2026-11-26 09:00 │ 90 kr  │ Avslutat  │ [Välj] │
+│ 5  │ AAA 111 │ B2  │ 2026-11-24 13:00 │ 2026-11-24 17:00 │ 40 kr  │ Betalt    │ [Välj] │
+│ 6  │ CCC 333 │ BO  │ 2026-11-25 23:00 │ 2026-11-26 00:00 │ 30 kr  │ Avslutat  │ [Välj] │
+│ 7  │ AAA 111 │ A1  │ 2026-11-26 07:30 │ –                │ –      │ Pågående  │ [Välj] │
+│ 8  │ CCC 333 │ A1  │ 2026-11-24 07:00 │ 2026-11-24 08:10 │ 40 kr  │ Betalt    │ [Välj] │
 └────┴─────────┴─────┴──────────────────┴──────────────────┴────────┴───────────┴────────┘
 ```
 
@@ -290,10 +310,10 @@ Tillfällen                 [Starta tillfälle] [Visa tillfällen för ett fordo
 
 ```
 Tillfälle 3
- Fordon   AAA 111 – Blå personbil
- Zon      A1 Torggatan (A)
- Start    2026-11-24 10:00
- Slut     2026-11-24 12:00
+ Fordon   CCC 333 – Röd kombi
+ Zon      B2 Pendlarvägen (B)
+ Start    2026-11-24 22:30
+ Slut     2026-11-25 01:15
  Avgift   40 kr
  Status   Pågående → [Avslutat] → Betalt
 
@@ -318,7 +338,7 @@ Tillfälle 3
 ### V14 Registrera betalning
 
 - **Nås från:** V12, knappen "Registrera betalning".
-- **Indata:** bekräftelsedialog B03 med knapparna **Registrera betalning** och **Avbryt**. Inga andra indata **(förslag, Ö3)**.
+- **Indata:** bekräftelsedialog B03 med knapparna **Registrera betalning** och **Avbryt**. Inga andra indata.
 - **Utdata:** kvitto K09. Status blir Betalt och tillfället är därefter låst.
 - **Felmeddelanden:**
   - F04: tillfället är Pågående.
@@ -373,7 +393,7 @@ Tillfälle 3
   - Tabell med kolumnerna Plac, Fordon, Zon, Start, Slut och Avgift och en summarad "Summa".
   - Raderna visas i den ordning logikdelen levererar dem. Plac är radens löpnummer i den ordningen.
   - Rapporten tar med tillfällen med status Avslutat eller Betalt vars sluttid ligger på det valda datumet. Pågående tillfällen visas inte.
-  - Start och Slut visas som klockslag **(förslag, Ö7)**.
+  - Start visas som klockslag (HH:MM) när starten ligger på rapportdatumet, och annars som "ÅÅÅÅ-MM-DD HH:MM". Slut visas alltid som klockslag.
   - Om inga tillfällen ingår visas T19 och summaraden "Summa 0 kr". Det är inget fel.
 - **Felmeddelanden:** F18, F20.
 
@@ -393,13 +413,23 @@ Dygnsrapport 2026-11-24
 └──────────────────────────────────────┴────────┘
 ```
 
+**Exempel på Start som ligger ett annat datum.** Utdraget visar bara raden för tillfälle 4 i Dygnsrapport 2026-11-26. Summaraden är utelämnad eftersom tillfälle 6 inte tas med (se Exempeldata).
+
+```
+┌──────┬─────────┬─────┬──────────────────┬───────┬────────┐
+│ Plac │ Fordon  │ Zon │ Start            │ Slut  │ Avgift │
+├──────┼─────────┼─────┼──────────────────┼───────┼────────┤
+│ 1    │ DDD 444 │ BO  │ 2026-11-24 18:00 │ 09:00 │  90 kr │
+└──────┴─────────┴─────┴──────────────────┴───────┴────────┘
+```
+
 ### V19 Spara
 
 - **Nås från:** menyvalet "Spara".
 - **Indata:**
   - **Filnamn:** textfält, förifyllt med namnet på den senast öppnade eller sparade filen.
   - Knapparna **Spara till fil** och **Avbryt**.
-  - Filen hämtas ned via webbläsaren **(förslag, Ö4)**.
+  - Filen hämtas ned via webbläsaren.
 - **Utdata:** kvitto K12. Indikatorn "Osparade ändringar" försvinner. Användaren är tillbaka i föregående vy.
 - **Felmeddelanden:** F20, F21.
 
@@ -407,8 +437,8 @@ Dygnsrapport 2026-11-24
 
 - **Nås från:** menyvalet "Öppna".
 - **Indata:**
-  - Om det finns osparade ändringar visas först varningen B04 med knapparna **Fortsätt utan att spara** och **Avbryt** **(förslag, Ö6)**.
-  - Sedan öppnas webbläsarens filväljare **(förslag, Ö4)**.
+  - Om det finns osparade ändringar visas först varningen B04 med knapparna **Fortsätt utan att spara** och **Avbryt**.
+  - Sedan öppnas webbläsarens filväljare.
 - **Utdata:**
   - Vid lyckad inläsning ersätts data i minnet med filens innehåll, och kvitto K13 visas.
   - Om användaren avbryter filvalet visas T20, och data är oförändrade.
@@ -416,9 +446,9 @@ Dygnsrapport 2026-11-24
 
 ### V21 Avsluta
 
-- **Nås från:** menyvalet "Avsluta" **(förslag, Ö5)**.
+- **Nås från:** menyvalet "Avsluta".
 - **Indata:**
-  - Om det finns osparade ändringar visas varningen B05 med knapparna **Spara och avsluta**, **Avsluta utan att spara** och **Avbryt** **(förslag, Ö6)**. "Spara och avsluta" går via V19.
+  - Om det finns osparade ändringar visas varningen B05 med knapparna **Spara och avsluta**, **Avsluta utan att spara** och **Avbryt**. "Spara och avsluta" går via V19.
   - Utan osparade ändringar visas B06 med knapparna **Avsluta** och **Avbryt**.
 - **Utdata:**
   - T21 visas och menyraden spärras.
@@ -430,6 +460,12 @@ Dygnsrapport 2026-11-24
 ## 4 Texter och felmeddelanden (ordagrant, så som de visas)
 
 Exempelvärden inom klamrar, `{...}`, ersätts med verkliga värden när texten visas. Prefixet "Fel:" eller "Klart:" visas i meddelanderutan framför texten.
+
+Exempelvärdena följer räkneexemplet i avsnitt 3. Tre texter beskriver lägen som inte finns i exemplet, och där är värdena bara illustrationer:
+
+- **K03:** ingen zon i exemplet kan tas bort, eftersom alla zoner har tillfällen som är Pågående eller Avslutade.
+- **T17:** alla fordon i exemplet har tillfällen.
+- **K11:** den tidigare avgiften finns inte i exemplet.
 
 ### 4.1 Rubriker, menyval och knappar
 
@@ -450,13 +486,13 @@ Exempelvärden inom klamrar, `{...}`, ersätts med verkliga värden när texten 
 | Id | Text |
 |---|---|
 | T10 | Välkommen till Parkeringsavgifterna. Välj i menyn vad du vill göra. |
-| T11 | I minnet finns {3} zoner, {4} fordon och {5} tillfällen. |
+| T11 | I minnet finns {3} zoner, {4} fordon och {8} tillfällen. |
 | T12 | Inga data är inlästa. Välj Öppna för att läsa in en sparad fil, eller börja med Zoner och Fordon. |
 | T13 | Inga zoner finns. Välj Lägg till zon. |
 | T14 | Inga fordon finns. Välj Lägg till fordon. |
 | T15 | Inga tillfällen finns. Välj Starta tillfälle. |
 | T16 | Tillfällen för {AAA 111} – {Blå personbil} |
-| T17 | Fordonet {AAA 111} har inga tillfällen. |
+| T17 | Fordonet {EEE 555} har inga tillfällen. |
 | T18 | Dygnsrapport {2026-11-24} |
 | T19 | Inga avslutade tillfällen detta datum. |
 | T20 | Öppna avbröts. Data i programmet är oförändrade. |
@@ -467,8 +503,8 @@ Exempelvärden inom klamrar, `{...}`, ersätts med verkliga värden när texten 
 | Id | Text |
 |---|---|
 | B01 | Ta bort zonen {A1 Torggatan (A)}? Betalda tillfällen i zonen tas också bort. Det går inte att ångra. |
-| B02 | Ta bort fordonet {AAA 111}? Betalda tillfällen för fordonet tas också bort. Det går inte att ångra. |
-| B03 | Registrera betalning för tillfälle {3}, {AAA 111} i zon {A1}, {40} kr? |
+| B02 | Ta bort fordonet {BBB 222}? Betalda tillfällen för fordonet tas också bort. Det går inte att ångra. |
+| B03 | Registrera betalning för tillfälle {3}, {CCC 333} i zon {B2}, {40} kr? |
 | B04 | Det finns osparade ändringar. Om du öppnar en annan fil försvinner de. |
 | B05 | Det finns osparade ändringar. Vill du spara innan du avslutar? |
 | B06 | Vill du avsluta programmet? |
@@ -482,14 +518,14 @@ Exempelvärden inom klamrar, `{...}`, ersätts med verkliga värden när texten 
 | K03 | Zonen {A1} har tagits bort. {2} betalda tillfällen togs också bort. |
 | K04 | Fordonet {AAA 111} har lagts till. |
 | K05 | Beskrivningen för fordonet {AAA 111} har ändrats. |
-| K06 | Fordonet {AAA 111} har tagits bort. {1} betalda tillfällen togs också bort. |
-| K07 | Tillfälle {5} har startats för {AAA 111} i zon {A1}. |
+| K06 | Fordonet {BBB 222} har tagits bort. {1} betalda tillfällen togs också bort. |
+| K07 | Tillfälle {7} har startats för {AAA 111} i zon {A1}. |
 | K08 | Tillfälle {3} har avslutats. Avgift: {40} kr. |
 | K09 | Betalning har registrerats för tillfälle {3}. |
-| K10 | Starttiden för tillfälle {4} har rättats till {2026-11-25 08:15}. |
-| K11 | Sluttiden för tillfälle {2} har ändrats. Ny avgift: {120} kr (tidigare {160} kr). |
+| K10 | Starttiden för tillfälle {7} har rättats till {2026-11-26 07:30}. |
+| K11 | Sluttiden för tillfälle {4} har ändrats. Ny avgift: {90} kr (tidigare {tidigare avgift} kr). |
 | K12 | Data har sparats till {parkering.txt}. |
-| K13 | Filen {parkering.txt} har öppnats: {3} zoner, {4} fordon och {5} tillfällen. |
+| K13 | Filen {parkering.txt} har öppnats: {3} zoner, {4} fordon och {8} tillfällen. |
 
 ### 4.5 Felmeddelanden (prefix "Fel:")
 
@@ -497,12 +533,12 @@ De tre felen som AK6.2 kräver är F01, F02 och F03.
 
 | Id | När | Text |
 |---|---|---|
-| F01 | Start eller visning för ett fordon som inte finns (AK6.2) | Fordonet {AAA 111} finns inte. Lägg till det under Fordon först. |
-| F02 | Sluttiden ligger före starttiden (AK6.2) | Sluttiden får inte ligga före starttiden ({2026-11-24 10:00}). |
+| F01 | Start eller visning för ett fordon som inte finns (AK6.2) | Fordonet {EEE 555} finns inte. Lägg till det under Fordon först. |
+| F02 | Sluttiden ligger före starttiden (AK6.2) | Sluttiden får inte ligga före starttiden ({2026-11-26 07:30}). |
 | F03 | Zonkoden finns inte (AK6.2) | Zonen {A9} finns inte. Välj en zon i listan eller lägg till den under Zoner. |
-| F04 | Betalning av ett Pågående tillfälle | Tillfälle {4} är Pågående och kan inte betalas. Avsluta tillfället först. |
+| F04 | Betalning av ett Pågående tillfälle | Tillfälle {7} är Pågående och kan inte betalas. Avsluta tillfället först. |
 | F05 | Avslut av ett Betalt tillfälle | Tillfälle {1} är Betalt och kan inte avslutas. |
-| F06 | Ett andra Pågående tillfälle för samma fordon | Fordonet {DDD 444} har redan ett Pågående tillfälle (nr {4}). Avsluta det först. |
+| F06 | Ett andra Pågående tillfälle för samma fordon | Fordonet {AAA 111} har redan ett Pågående tillfälle (nr {7}). Avsluta det först. |
 | F07 | Ogiltigt registreringsnummer | Ogiltigt registreringsnummer: "{ABC 12D}". Ange tre bokstäver följda av tre siffror, till exempel AAA 111. |
 | F08 | Trasig fil vid Öppna | Filen {parkering.txt} kunde inte öppnas. Rad {7}: {orsak}. Data i programmet är oförändrade. |
 | F09 | Dubblett av zonkod | Zonkoden {A1} finns redan. |
@@ -511,14 +547,14 @@ De tre felen som AK6.2 kräver är F01, F02 och F03.
 | F12 | Borttagning av ett fordon med Pågående eller Avslutade tillfällen | Fordonet {AAA 111} kan inte tas bort eftersom det har tillfällen som är Pågående eller Avslutade. |
 | F13 | Ändring av ett Betalt tillfälle | Tillfälle {1} är Betalt och kan inte ändras. |
 | F14 | Rättad starttid för ett Avslutat tillfälle | Starttiden kan bara rättas för ett Pågående tillfälle. Tillfälle {3} är Avslutat. |
-| F15 | Ändrad sluttid för ett Pågående tillfälle | Sluttiden kan bara ändras för ett Avslutat tillfälle. Tillfälle {4} är Pågående. Välj Avsluta tillfälle. |
+| F15 | Ändrad sluttid för ett Pågående tillfälle | Sluttiden kan bara ändras för ett Avslutat tillfälle. Tillfälle {7} är Pågående. Välj Avsluta tillfälle. |
 | F16 | Avslut av ett Avslutat tillfälle | Tillfälle {3} är redan Avslutat. |
 | F17 | Betalning av ett Betalt tillfälle | Tillfälle {1} är redan Betalt. |
 | F18 | Ogiltigt datum | Ogiltigt datum: "{24/11}". Ange datum som ÅÅÅÅ-MM-DD, till exempel 2026-11-24. |
 | F19 | Ogiltigt klockslag | Ogiltigt klockslag: "{9.15}". Ange klockslag som HH:MM, till exempel 09:15. |
 | F20 | Tomt obligatoriskt fält | {Gatunamn} måste fyllas i. |
 | F21 | Sparandet misslyckades | Filen kunde inte sparas: {orsak}. Inga data har ändrats. |
-| F23 | Ogiltig zonkod (Ö2) | Texten bestäms när Ö2 är besvarad. |
+| F22 | Ogiltig zonkod (Ö2) | Texten bestäms när Ö2 är besvarad. |
 
 Om ett fält kan ge flera fel visas bara det första, i den här ordningen: F20 (tomt), F18, F19 eller F07 (format), F01 eller F03 (finns inte) och sist statusfelen.
 
@@ -532,7 +568,7 @@ Om ett fält kan ge flera fel visas bara det första, i den här ordningen: F20 
 - Borttagning och betalning går inte att ändra efteråt, eftersom ett Betalt tillfälle är låst. Därför kräver de en bekräftelse (B01–B03) där **Avbryt** har fokus från början, så att en snabb Enter inte gör något som inte går att ta tillbaka.
 - En felskrivning i ett Pågående eller Avslutat tillfälle kan rättas med Rätta starttid eller Ändra sluttid. Beskrivning och gatunamn kan alltid ändras tillbaka.
 - Fel ändrar aldrig några data. Formuläret står kvar med det användaren skrev, så att bara det felaktiga behöver rättas. Programmet avslutas aldrig vid fel (AK6.2).
-- Öppna ändrar ingenting om filen är trasig (F08) eller om användaren avbryter filvalet (T20). Varningar för osparade ändringar (B04, B05) skyddar arbetet mot att försvinna **(förslag, Ö6)**.
+- Öppna ändrar ingenting om filen är trasig (F08) eller om användaren avbryter filvalet (T20). Varningar för osparade ändringar (B04, B05) skyddar arbetet mot att försvinna.
 
 ### 5.2 Inget "mänskligt RAM"
 
