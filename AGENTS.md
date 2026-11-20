@@ -1,17 +1,20 @@
 # Projekt: Parkeringsavgifterna (ISGB04, grupp G10)
 
 ## Vad systemet gör
+
 Fastighetsbolaget Älvstranden Parkering i Hammarö driver ett tiotal små parkeringsplatser med olika taxor: timtaxa i
 centrum, lägre timtaxa vid pendlarparkeringen och fast dygnstaxa för boende. Bolaget vill ha ett litet program där vakten kan lägga upp
 zoner och fordon, registrera parkeringstillfällen med start- och sluttid, få avgiften uträknad enligt bolagets regler, ta fram en
 dygnsrapport och spara allt till fil.
 
 ## Arkitektur
+
 - Moduler: `model/` (entiteter och regler, K1–K3), `logic/` (algoritm K4), `storage/` (filformat K5), `ui/` (gränssnitt K6), `tests/`.
 - Gränssnittet får aldrig innehålla affärslogik. All validering sker i model/.
 - Designen finns i `docs/design.md` (klassdiagram, modulkontrakt) och gränssnittets design i `docs/design-extern.md` (godkänd av produktägaren). Följ dem. Föreslå ändringar i stället för att avvika tyst.
 
 ## Modulindelning (F4, bild 18)
+
 - **Moduloberoende:** få kopplingar till andra moduler; en ändring ska stanna inom modulen.
 - **Modulstyrka:** varje modul/klass ger en homogen typ av tjänst. En klass som både beräknar K4-tabellen och skriver K5-filen är för svag – dela upp den.
 - **Determinism:** samma indata ger samma utdata. Beräkningen i K4 ska vara deterministisk (ingen slump, ingen klocka, ingen dold tillståndsberoende logik).
@@ -23,10 +26,12 @@ dygnsrapport och spara allt till fil.
 - Syftet är enkelhet: snabbare felsökning, möjlig testning, stabilare kod, enklare ändringar och bättre spårbarhet.
 
 ## Språk och verktyg
+
 - Språk: JavaScript (ECMAScript 2022+), React 19, Node.js 22 LTS eller senare. Testramverk: Vitest och React Testing Library.
-- Starta: `⟨kommando⟩`. Testa: `⟨kommando⟩`. Kör testerna efter varje ändring och rapportera resultatet.
+- Starta: `npm run start`. Testa: `npm test`. Kör testerna efter varje ändring och rapportera resultatet.
 
 ## Regler för ändringar
+
 - Arbeta med en backlog-post (issue) i taget. Ändra bara filer som posten kräver.
 - Skriv eller uppdatera tester för det du ändrar. Tester ska testa krav (AK-nummer i testnamnet), inte spegla koden.
 - Inga nya beroenden utan att fråga. Ingen serialisering av hela objektgrafen med JSON/XML/pickle (K5).
@@ -35,6 +40,7 @@ dygnsrapport och spara allt till fil.
 - Logga alla interaktioner i docs/ai-logg.md, med datum, relatelad backlog-post när relevant, din roll, uppdraget i sammandrag samt beslut som tagits.
 
 ## Får inte
+
 - Ta bort eller ändra tester för att få dem gröna.
 - Lägga in personuppgifter i kod, tester eller exempeldata.
 - Köra kommandon som ändrar filer utanför repot.
