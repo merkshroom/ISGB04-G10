@@ -64,8 +64,8 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 
 | Modul | Innehåll | Får importera |
 |---|---|---|
-| model/ | Entiteter, tillstånd, regler och varianter (K1–K3) | – |
-| logic/ | Algoritmen i K4 | model |
+| model/ | Entiteter, tillstånd, regler och varianter (K1–K3) och avgiften i K4 (Parkeringstillfällen.Beräkna_avgift) | – |
+| logic/ | Dygnsrapporten i K4 (Parkeringssystem) | model |
 | storage/ | Filformatet i K5 | model |
 | ui/ | Gränssnittet i K6, utan affärslogik (AK6.3) | model, logic, storage |
 | tests/ | Tester | alla |
@@ -104,7 +104,7 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 |---|---|---|
 | AGENTS.md | Regler för AI-agenterna i repot | PO |
 | docs/design.docx | Design (klassdiagram, modulkontrakt, algoritm K4, filformat K5) | PO |
-| docs/design.md | Markdown-version av design.docx | TPL, ordagrant, på begäran (ej gjord än) |
+| docs/design.md | Markdown-version av design.docx (gjord 2026-11-25) | TPL, ordagrant, på begäran |
 | docs/design-extern.md | Extern designspecifikation, v1.1, godkänd av PO 2026-11-20 | Designer-AI |
 | docs/kravanalys.docx | Annoterad kravspec | PO |
 | docs/projektspecifikation.docx | Backlog, sprintplan, risker och kommunikationsplan | PO |
@@ -154,7 +154,7 @@ Har frågorna ställts? Har de besvarats? Kontrollera bestallarbeslut.docx.
   - tillfällen för ett fordon,
   - en lista över zontyper.
 
-  Utökningspunkten för AK3.3 är inte ifylld. PO uppdaterar design.docx, och därefter gör TPL om den till docs/design.md.
+  Utökningspunkten för AK3.3 är ifylld (Pendlarzon via Zontyps register). PO uppdaterar design.docx med metoderna ovan, och därefter gör TPL om den till docs/design.md igen.
 - **Designer-runda 3**, när fråga 1 i avsnitt 5 är besvarad:
   - ge F22 sin text,
   - byt rubriken i avsnitt 1.4 ("till PO" ska bli "till beställaren"),
