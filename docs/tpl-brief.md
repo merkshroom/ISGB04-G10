@@ -69,6 +69,10 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 - Tester med Vitest och React Testing Library.
 - Starta med `npm run start` och testa med `npm test`.
 - Godkända beroenden (PO 2026-11-25): react, react-dom, vite, @vitejs/plugin-react, vitest, @testing-library/react, @testing-library/jest-dom och jsdom. Andra beroenden kräver PO:s godkännande.
+- Versionerna är låsta exakt (utan ^) i package.json: react och react-dom 19.3.1, vite 8.3.8, @vitejs/plugin-react 6.3.0, vitest 5.1.1, @testing-library/react 16.3.3, @testing-library/jest-dom 8.0.0 och jsdom 28.1.0.
+- Node-krav: `"engines": { "node": "^22.13.0 || ^24.0.0 || >=26.0.0" }`, snittet av alla paketens krav i package-lock.json utan undantag (PO 2026-11-25). jsdom 31 valdes bort eftersom den kräver Node 24.15 eller senare inom version 24.
+- Undantag från gränsen på 400 rader: genererade filer, till exempel package-lock.json, delas inte (PO 2026-11-25).
+- På Windows blockerar PowerShell ibland npm.ps1. Kör då `npm.cmd run start` och `npm.cmd test`.
 - Grafiskt gränssnitt (GUI) i webbläsaren, på svenska.
 - Moduler i repots rot:
 
@@ -133,11 +137,14 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 
 - Lab 2: designen är fastlagd och design-extern.md v1.1 är godkänd efter två designer-runder.
 - Repots skelett finns: modulkataloger, README-utkast, .gitignore och .gitattributes (Codex).
-- Lab 3 har startat (2026-11-25): startprompterna är skrivna, testprotokollet finns som mall och design.md är synkad med design.docx.
+- Lab 3 har startat (2026-11-25): startprompterna (v3) är skrivna, testprotokollet finns som mall och design.md är synkad med design.docx.
+- Designer-AI har bekräftat startprompten (V1–V21) och väntar på runda 3.
+- #7, del 1 (uppsättning): TPL föreslår godkänn efter ändring 1 (Node-krav). Grenen issue-7-K7-uppsattning. Före PR: slå ihop main i grenen, rätta den motsägelsefulla loggraden om vem som committar, PO kör npm install, npm test och npm run start, och en annan medlem än den som körde Codex granskar.
 
 **Pågår**
 
-- Sprint 1 (23–30 nov), i sprintplanens ordning: #7 (uppsättning: package.json och beroenden), #1 K1, #2 K2, #3 K3, #4 K4, #5 K5, sedan #6 K6. Ingen kod finns ännu. Progressrapport 30 nov 12:00.
+- Sprint 1 (23–30 nov), i sprintplanens ordning: #1 K1, #2 K2, #3 K3, #4 K4, #5 K5, sedan #6 K6. Ingen affärskod finns ännu. Progressrapport 30 nov 12:00.
+- Nästa uppdrag är #1 K1. TPL behöver direktivet (AK1.1–1.3 ordagrant) och PO:s testfall. Reglerna från beställarbeslut 1–3 skrivs in i uppdraget i stället för de modulkontrakt som saknas (PO har bett TPL bortse från dem).
 - Sprint 2 (30 nov–7 dec): resten av K6–K7, ÄB1 (K10) och om möjligt K8–K9. ÄB1 lämnas vid handledningen 30 nov och kräver en konsekvensanalys som backlog-post innan första commit (AK10.1).
 
 **Kommande leveranser**
