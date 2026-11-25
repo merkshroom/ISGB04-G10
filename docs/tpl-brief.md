@@ -69,6 +69,10 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 - Tester med Vitest och React Testing Library.
 - Starta med `npm run start` och testa med `npm test`.
 - Godkända beroenden (PO 2026-11-25): react, react-dom, vite, @vitejs/plugin-react, vitest, @testing-library/react, @testing-library/jest-dom och jsdom. Andra beroenden kräver PO:s godkännande.
+- Versionerna är låsta exakt (utan ^) i package.json: react och react-dom 19.3.1, vite 8.3.8, @vitejs/plugin-react 6.3.0, vitest 5.1.1, @testing-library/react 16.3.3, @testing-library/jest-dom 8.0.0 och jsdom 28.1.0.
+- Node-krav: `"engines": { "node": "^22.13.0 || ^24.0.0 || >=26.0.0" }`, snittet av alla paketens krav i package-lock.json utan undantag (PO 2026-11-25). jsdom 31 valdes bort eftersom den kräver Node 24.15 eller senare inom version 24.
+- Undantag från gränsen på 400 rader: genererade filer, till exempel package-lock.json, delas inte (PO 2026-11-25).
+- På Windows blockerar PowerShell ibland npm.ps1. Kör då `npm.cmd run start` och `npm.cmd test`.
 - Grafiskt gränssnitt (GUI) i webbläsaren, på svenska.
 - Moduler i repots rot:
 
@@ -133,11 +137,14 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 
 - Lab 2: designen är fastlagd och design-extern.md v1.1 är godkänd efter två designer-runder.
 - Repots skelett finns: modulkataloger, README-utkast, .gitignore och .gitattributes (Codex).
-- Lab 3 har startat (2026-11-25): startprompterna är skrivna, testprotokollet finns som mall och design.md är synkad med design.docx.
+- Lab 3 har startat (2026-11-25): startprompterna (v3) är skrivna, testprotokollet finns som mall och design.md är synkad med design.docx.
+- Designer-AI har bekräftat startprompten (V1–V21) och väntar på runda 3.
+- #7, del 1 (uppsättning): TPL föreslår godkänn efter ändring 1 (Node-krav). Grenen issue-7-K7-uppsattning. Före PR: slå ihop main i grenen, rätta den motsägelsefulla loggraden om vem som committar, PO kör npm install, npm test och npm run start, och en annan medlem än den som körde Codex granskar.
 
 **Pågår**
 
-- Sprint 1 (23–30 nov), i sprintplanens ordning: #7 (uppsättning: package.json och beroenden), #1 K1, #2 K2, #3 K3, #4 K4, #5 K5, sedan #6 K6. Ingen kod finns ännu. Progressrapport 30 nov 12:00.
+- Sprint 1 (23–30 nov), i sprintplanens ordning: #1 K1, #2 K2, #3 K3, #4 K4, #5 K5, sedan #6 K6. Ingen affärskod finns ännu. Progressrapport 30 nov 12:00.
+- Nästa uppdrag är #1 K1. TPL behöver direktivet (AK1.1–1.3 ordagrant) och PO:s testfall. Reglerna från beställarbeslut 1–3 skrivs in i uppdraget i stället för de modulkontrakt som saknas (PO har bett TPL bortse från dem).
 - Sprint 2 (30 nov–7 dec): resten av K6–K7, ÄB1 (K10) och om möjligt K8–K9. ÄB1 lämnas vid handledningen 30 nov och kräver en konsekvensanalys som backlog-post innan första commit (AK10.1).
 
 **Kommande leveranser**
@@ -162,9 +169,8 @@ Status 2026-11-25: båda frågorna väntar på svar från beställaren. Kontroll
 
 - **Klassdiagrammet i design.docx** har fått metoderna för att ändra och ta bort zon och fordon, ändra start- och sluttid och lista zontyper (commit 9c370ee). Kvar 2026-11-25:
   - **Modulkontrakt saknas** för andraZon, andraFordon, taBortZon, taBortFordon, andraStarttid, andraSluttid, listaTillfallen, listaZontyper och entiteternas andra-metoder. Det stoppar #1 och #2 (arbetsregel 3).
-  - **Tabellen och bilden:** kompletterad i design.md (commit e21f942), där beraknaAvgift() också fick ny signatur utan parameter. Ändringen finns inte i design.docx, som är oförändrad sedan 9c370ee. design.docx ska vara källan, så ändringen behöver föras in där.
-- **Word-låsfilen** docs/~$stprotokoll.docx är committad. Ta bort den och lägg till `~$*` i .gitignore.
-- **Småfel i design.docx och design.md:** utökningspunkten nämner Meny i stället för App. (Signaturen för beraknaAvgift är rättad i design.md men inte i design.docx.)
+  - **Tabellen och bilden:** design.docx kompletterad (commit 1a879be) och design.md synkad 2026-11-25. Parkeringstillfälle.andraStarttid/andraSluttid står utan nr i båda filerna (PO-beslut 2026-11-25).
+- **Småfel i design.docx och design.md:** utökningspunkten nämner Meny i stället för App.
 - **Projektdirektivet (PDF)** finns inte i repot. Bifoga det i TPL-tråden innan uppdrag skrivs, så att AK-texterna kan läsas ordagrant.
 - **Designer-runda 3**, när fråga 1 i avsnitt 5 är besvarad:
   - ge F22 sin text,
