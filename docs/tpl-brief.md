@@ -146,7 +146,7 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 - Sprint 1 (23–30 nov), ny ordning (PO 2026-11-25): #3 K3 → #1 K1 → #2 K2 → #4 K4 → #5 K5 → #6 K6. Ingen affärskod finns ännu. Progressrapport 30 nov 12:00.
   - Skäl: Zon kräver en Zontyp (#3), och Parkeringstillfälle.avsluta kräver beraknaAvgift (K4).
   - Omfång: #1 = model/ (Status, Tidpunkt, Zon, Fordon, Parkeringstillfälle inklusive beraknaAvgift). Testfallen för avgiften i K4 (AK4.1 avgifter, AK4.4) committas före #1:s implementation (K7(a)). #2 = Parkeringssystem i logic/. #4 = dygnsrapporten (AK4.1 rapporten, AK4.2, AK4.3). AK1.1 "via gränssnittet" verifieras fullt i #6.
-  - Ändringen ska föras in i projektspecifikationens sprintplan och i progressrapporten.
+  - Ändringen står i projektspecifikation.docx (stycket "Ändring av sprint 1" efter sprintplanen) och ska redovisas i progressrapporten.
 - Pågående uppdrag: #3 K3 (gren issue-3-K3-zontyper). PO klistrar in testfallen direkt under TPL:s uppdrag (Codex läser inte docx pålitligt) och för därefter in dem i testprotokollet.
 - Direktivet v1.3 finns lokalt i Downloads hos en medlem; bör läggas i docs/.
 - Sprint 2 (30 nov–7 dec): resten av K6–K7, ÄB1 (K10) och om möjligt K8–K9. ÄB1 lämnas vid handledningen 30 nov och kräver en konsekvensanalys som backlog-post innan första commit (AK10.1).
