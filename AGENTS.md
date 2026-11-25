@@ -11,7 +11,7 @@ dygnsrapport och spara allt till fil.
 
 - Moduler: `model/` (entiteter och regler, K1–K3), `logic/` (algoritm K4), `storage/` (filformat K5), `ui/` (gränssnitt K6), `tests/`.
 - Gränssnittet får aldrig innehålla affärslogik. All validering sker i model/.
-- Designen finns i `docs/design.docx` (klassdiagram, modulkontrakt) och gränssnittets design i `docs/design-extern.md` (godkänd av produktägaren). Följ dem. Föreslå ändringar i stället för att avvika tyst.
+- Designen finns i `docs/design.md` (klassdiagram, modulkontrakt) och gränssnittets design i `docs/design-extern.md` (godkänd av produktägaren). Följ dem. Föreslå ändringar i stället för att avvika tyst.
 
 ## Modulindelning (F4, bild 18)
 
