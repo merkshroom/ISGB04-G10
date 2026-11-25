@@ -1,0 +1,24 @@
+{
+  "name": "parkeringsavgifterna",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "vite",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "vite": "8.3.8",
+    "@vitejs/plugin-react": "6.3.0",
+    "vitest": "5.1.1",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/jest-dom": "8.0.0",
+    "jsdom": "31.0.1"
+  }
+}
