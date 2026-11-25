@@ -20,7 +20,7 @@ Starta: npm run start Testa: npm test
 
 ## 3. Klassdiagram (K1–K3, K6)
 
-`App` är en React-komponent som använder `Parkeringssystem` och `Filhanterare`.
+`App` är en React-komponent som använder `Parkeringssystem` och `Filhanterare` samt listar zontyper genom `Zontyp`.
 
 `Parkeringssystem` består av 0..* zoner, 0..* fordon och 0..* parkeringstillfällen. Varje sådan instans hör till ett system. Systemet använder hjälpmodulen `Tidpunkt` och skapar zontyper genom `Zontyp`.
 
@@ -30,9 +30,13 @@ Varje `Zon` har exakt en `Zontyp`; en zontyp kan användas av 0..* zoner. `Zonty
 
 `Filhanterare` använder `Zon`, `Fordon`, `Parkeringstillfälle`, `Zontyp` och `Tidpunkt`. Dess publika metoder är `spara(data)` och `oppna(fil)`.
 
-Attributen är privata i diagrammet. Metoderna är publika utom `Parkeringssystem.genereraTillfallesnummer()`, som är privat. De understrukna medlemmarna är statiska: `Zon.valideraKod(kod)`, `Zon.valideraGatunamn(gatunamn)`, `Fordon.valideraRegnr(regnr)`, `Fordon.valideraBeskrivning(beskrivning)`, `Parkeringstillfälle.aterstall(nr, fordon, zon, start, slut, status, avgift)`, `Zontyp.register` och `Zontyp.skapa(zontypkod)`.
+Attributen är privata i diagrammet utom `Zontyp.kod`, som är publik. Metoderna är publika utom `Parkeringssystem.genereraTillfallesnummer()`, som är privat. De understrukna medlemmarna är statiska: `Zon.valideraKod(kod)`, `Zon.valideraGatunamn(gatunamn)`, `Fordon.valideraRegnr(regnr)`, `Fordon.valideraBeskrivning(beskrivning)`, `Parkeringstillfälle.aterstall(nr, fordon, zon, start, slut, status, avgift)`, `Zontyp.register`, `Zontyp.skapa(zontypkod)` och `Zontyp.listaZontyper()`.
+
+Diagrammet visar även `Parkeringssystem.listaTillfallen(regnr)` samt `Parkeringstillfälle.andraStarttid(starttid)` och `Parkeringstillfälle.andraSluttid(sluttid)`. `Zontyp` har attributet `kod: string`. Subklassernas koder är `A` för `ZontypA`, `B` för `ZontypB`, `BOENDE` för `Boende` och `PENDLAR` för den framtida varianten `Pendlarzon`.
 
 Returtyper som anges i diagrammet är `Date` för `Tidpunkt.tolkaTidpunkt(text)`, `string` för `Tidpunkt.formateraTidpunkt(tidpunkt)`, `Zontyp` för `Zontyp.skapa(zontypkod)` samt `number` för `Parkeringstillfälle.beraknaAvgift(sluttid)` och samtliga `dygnsavgift(minuter)`. Klasser, attribut, metoder och relationer återges i tabellen nedan.
+
+Diagrammet anger dessutom returtypen `string` för `Filhanterare.spara(data)`, `Promise<Parkeringsdata>` för `Filhanterare.oppna(fil)` och `string[]` för `Zontyp.listaZontyper()`.
 
 Samma klasser i text. Kodagenten kan inte läsa en bild, så det är den här tabellen den följer:
 
@@ -40,13 +44,13 @@ Samma klasser i text. Kodagenten kan inte läsa en bild, så det är den här ta
 | --- | --- | --- | --- |
 | App |  | React-komponent | Använder Parkeringsystem och Filhanterare |
 | Filhanterare |  | spara(),<br>öppna() | Använder Fordon, Zon, Parkeringstillfälle, Zontyp och Tidpunkt |
-| Parkeringssystem | zoner: Zon[]<br>fordon: Fordon[]<br>tillfallen: Parkeringstillfalle[] | laggTillZon(kod, gatunamn, zontypkod) <br>laggTillFordon(regnr, beskrivning) <br>hamtaZon(kod) <br>hamtaFordon(regnr) <br>hamtaTillfalle(nr) <br>starta(regnr, zonkod, starttid) <br>avsluta(nr, sluttid) <br>registreraBetalning(nr) <br>dygnsrapport(datum) <br>ersattData(data) <br>genereraTillfallesnummer() | Har 0..* Zon, 0..* Fordon och 0..* Parkeringstillfälle. Använder Tidpunkt och Zontyp. |
-| Zon | kod: string <br>gatunamn: string <br>zontyp: Zontyp | constructor(kod, gatunamn, zontyp) <br>valideraKod(kod)  valideraGatunamn(gatunamn) | Har 1 Zontyp och 0..* Parkeringstillfälle. |
-| Fordon | regnr: string <br><br> beskrivning: string | constructor(regnr, beskrivning) <br>valideraRegnr(regnr) <br>valideraBeskrivning(beskrivning) | Har 0..* Parkeringstillfälle, varav maximalt ett med status Pågående. |
+| Parkeringssystem | zoner: Zon[]<br>fordon: Fordon[]<br>tillfallen: Parkeringstillfalle[] | laggTillZon(kod, gatunamn, zontypkod) <br>laggTillFordon(regnr, beskrivning) <br>hamtaZon(kod) <br>hamtaFordon(regnr) <br>hamtaTillfalle(nr) <br>starta(regnr, zonkod, starttid) <br>avsluta(nr, sluttid) <br>registreraBetalning(nr) <br>dygnsrapport(datum) <br>ersattData(data) <br>genereraTillfallesnummer()<br>andraZon(kod, gatunamn)<br>andraFordon(regnr, beskrivning)<br>taBortZon(kod)<br>taBortFordon(regnr)<br>andraStarttid(nr, starttid)<br>andraSluttid(nr, sluttid) | Har 0..* Zon, 0..* Fordon och 0..* Parkeringstillfälle. Använder Tidpunkt och Zontyp. |
+| Zon | kod: string <br>gatunamn: string <br>zontyp: Zontyp | constructor(kod, gatunamn, zontyp) <br>valideraKod(kod)  valideraGatunamn(gatunamn)<br>andraGatunamn(gatunamn) | Har 1 Zontyp och 0..* Parkeringstillfälle. |
+| Fordon | regnr: string <br><br> beskrivning: string | constructor(regnr, beskrivning) <br>valideraRegnr(regnr) <br>valideraBeskrivning(beskrivning)<br>andraBeskrivning(beskrivning) | Har 0..* Parkeringstillfälle, varav maximalt ett med status Pågående. |
 | Parkeringstillfälle | nr: number <br>fordon: Fordon <br>zon: Zon <br>start: Date <br>slut: Date eller null <br>avgift: number eller null <br>status: Status | constructor(nr, fordon, zon, start) <br>avsluta(sluttid) <br>registreraBetalning() <br>beraknaAvgift(sluttid) <br>aterstall(nr, fordon, zon, start, slut, status, avgift) | Hör till exakt 1 Fordon och 1 Zon. Har 1 Status. Använder Tidpunkt. |
 | Tidpunkt |  | tolkaTidpunkt(text)<br>formateraTidpunkt(tidpunkt) <br>valideraDatum(datum) <br>valideraTidsintervall(start, slut) | Hjälpmodul som används av Parkeringssystem, Parkeringstillfälle och Filhanterare. |
 | Status | PAGAENDE AVSLUTAT <br>BETALT | - | Enumeration som används av Parkeringstillfälle. |
-| Zontyp | register: Map (zontypkod → klass) | skapa(zontypkod) <br>dygnsavgift(minuter) | Abstrakt basklass för samtliga zontyper. |
+| Zontyp | register: Map (zontypkod → klass) | skapa(zontypkod) <br>dygnsavgift(minuter)<br>listaZontyper() | Abstrakt basklass för samtliga zontyper. |
 | ZontypA | timtaxa = 20 <br>tak = 160 | dygnsavgift(minuter) | Ärver Zontyp |
 | ZontypB | timtaxa = 10 <br>tak = 240 | dygnsavgift(minuter) | Ärver Zontyp |
 | Boende | dygnstaxa = 30 | dygnsavgift(minuter) | Ärver Zontyp |
