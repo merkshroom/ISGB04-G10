@@ -162,8 +162,9 @@ Status 2026-11-25: båda frågorna väntar på svar från beställaren. Kontroll
 
 - **Klassdiagrammet i design.docx** har fått metoderna för att ändra och ta bort zon och fordon, ändra start- och sluttid och lista zontyper (commit 9c370ee). Kvar 2026-11-25:
   - **Modulkontrakt saknas** för andraZon, andraFordon, taBortZon, taBortFordon, andraStarttid, andraSluttid, listaTillfallen, listaZontyper och entiteternas andra-metoder. Det stoppar #1 och #2 (arbetsregel 3).
-  - **Tabellen och bilden skiljer sig:** listaTillfallen(regnr), Parkeringstillfalle.andraStarttid/andraSluttid och Zontyp.kod finns bara i bilden (beskrivs i texten ovanför tabellen). Kodagenten ska följa tabellen, så tabellen bör kompletteras.
-- **Småfel i design.docx:** utökningspunkten nämner Meny i stället för App, och kontraktet anger `beraknaAvgift()` utan parameter (`beraknaAvgift(sluttid)` i tabellen och pseudokoden).
+  - **Tabellen och bilden:** kompletterad i design.md (commit e21f942), där beraknaAvgift() också fick ny signatur utan parameter. Ändringen finns inte i design.docx, som är oförändrad sedan 9c370ee. design.docx ska vara källan, så ändringen behöver föras in där.
+- **Word-låsfilen** docs/~$stprotokoll.docx är committad. Ta bort den och lägg till `~$*` i .gitignore.
+- **Småfel i design.docx och design.md:** utökningspunkten nämner Meny i stället för App. (Signaturen för beraknaAvgift är rättad i design.md men inte i design.docx.)
 - **Projektdirektivet (PDF)** finns inte i repot. Bifoga det i TPL-tråden innan uppdrag skrivs, så att AK-texterna kan läsas ordagrant.
 - **Designer-runda 3**, när fråga 1 i avsnitt 5 är besvarad:
   - ge F22 sin text,
