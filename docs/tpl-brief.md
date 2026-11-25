@@ -160,13 +160,9 @@ Status 2026-11-25: båda frågorna väntar på svar från beställaren. Kontroll
 
 ## 6 Kända luckor och nästa steg
 
-- **Klassdiagrammet i design.docx** saknar fortfarande (kontrollerat 2026-11-25, både tabellen och bilden), med modulkontrakt, metoder som design-extern.md förutsätter:
-  - ändra och ta bort zon och fordon,
-  - rätta starttid och ändra sluttid,
-  - tillfällen för ett fordon,
-  - en lista över zontyper.
-
-  Det stoppar #1 och #2 (arbetsregel 3). PO uppdaterar design.docx, och därefter gör TPL om design.md igen.
+- **Klassdiagrammet i design.docx** har fått metoderna för att ändra och ta bort zon och fordon, ändra start- och sluttid och lista zontyper (commit 9c370ee). Kvar 2026-11-25:
+  - **Modulkontrakt saknas** för andraZon, andraFordon, taBortZon, taBortFordon, andraStarttid, andraSluttid, listaTillfallen, listaZontyper och entiteternas andra-metoder. Det stoppar #1 och #2 (arbetsregel 3).
+  - **Tabellen och bilden skiljer sig:** listaTillfallen(regnr), Parkeringstillfalle.andraStarttid/andraSluttid och Zontyp.kod finns bara i bilden (beskrivs i texten ovanför tabellen). Kodagenten ska följa tabellen, så tabellen bör kompletteras.
 - **Småfel i design.docx:** utökningspunkten nämner Meny i stället för App, och kontraktet anger `beraknaAvgift()` utan parameter (`beraknaAvgift(sluttid)` i tabellen och pseudokoden).
 - **Projektdirektivet (PDF)** finns inte i repot. Bifoga det i TPL-tråden innan uppdrag skrivs, så att AK-texterna kan läsas ordagrant.
 - **Designer-runda 3**, när fråga 1 i avsnitt 5 är besvarad:
