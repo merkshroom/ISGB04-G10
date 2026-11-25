@@ -20,19 +20,7 @@ Starta: npm run start Testa: npm test
 
 ## 3. Klassdiagram (K1–K3, K6)
 
-`App` är en React-komponent som använder `Parkeringssystem` och `Filhanterare`.
-
-`Parkeringssystem` består av 0..* zoner, 0..* fordon och 0..* parkeringstillfällen. Varje sådan instans hör till ett system. Systemet använder hjälpmodulen `Tidpunkt` och skapar zontyper genom `Zontyp`.
-
-Varje `Parkeringstillfälle` hör till exakt ett `Fordon` och exakt en `Zon`, använder `Tidpunkt` och har ett värde ur enumerationen `Status`: `PAGAENDE`, `AVSLUTAT` eller `BETALT`. Ett fordon och en zon kan vardera ha 0..* parkeringstillfällen. Ett fordon får ha maximalt ett pågående parkeringstillfälle. Slut och avgift är `null` vid pågående parkering.
-
-Varje `Zon` har exakt en `Zontyp`; en zontyp kan användas av 0..* zoner. `Zontyp` är en abstrakt basklass. `ZontypA`, `ZontypB` och `Boende` ärver `Zontyp`. `Pendlarzon` visas som en framtida variant med framtida arv från `Zontyp`.
-
-`Filhanterare` använder `Zon`, `Fordon`, `Parkeringstillfälle`, `Zontyp` och `Tidpunkt`. Dess publika metoder är `spara(data)` och `oppna(fil)`.
-
-Attributen är privata i diagrammet. Metoderna är publika utom `Parkeringssystem.genereraTillfallesnummer()`, som är privat. De understrukna medlemmarna är statiska: `Zon.valideraKod(kod)`, `Zon.valideraGatunamn(gatunamn)`, `Fordon.valideraRegnr(regnr)`, `Fordon.valideraBeskrivning(beskrivning)`, `Parkeringstillfälle.aterstall(nr, fordon, zon, start, slut, status, avgift)`, `Zontyp.register` och `Zontyp.skapa(zontypkod)`.
-
-Returtyper som anges i diagrammet är `Date` för `Tidpunkt.tolkaTidpunkt(text)`, `string` för `Tidpunkt.formateraTidpunkt(tidpunkt)`, `Zontyp` för `Zontyp.skapa(zontypkod)` samt `number` för `Parkeringstillfälle.beraknaAvgift(sluttid)` och samtliga `dygnsavgift(minuter)`. Klasser, attribut, metoder och relationer återges i tabellen nedan.
+[bild]
 
 Samma klasser i text. Kodagenten kan inte läsa en bild, så det är den här tabellen den följer:
 

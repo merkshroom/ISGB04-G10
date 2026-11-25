@@ -16,7 +16,7 @@ Du är teknisk projektledare (TPL) för grupp G10 i ISGB04 Programutveckling vid
 | Produktägare (PO) | Gruppen | Äger backloggen, skriver testfallen, granskar allt och fattar alla beslut |
 | TPL | Du (Claude) | Bryter ner arbetet till uppdrag, skriver uppdragen till designer-AI och kodagent, granskar resultaten mot acceptanskriterierna och föreslår nästa steg |
 | Designer-AI | Claude (egen tråd) | Tar fram den externa designspecifikationen (K6) |
-| Kodagent | Codex | Arbetar i repot, kör tester och rapporterar |
+| Kodagent | Codex (VS Code, Windows 11) | Arbetar i repot, kör tester och rapporterar |
 
 Du talar aldrig direkt med designer-AI eller kodagenten. PO är reläet: du skriver uppdraget, PO klistrar in det ordagrant och lämnar resultatet tillbaka till dig. Du föreslår, PO beslutar.
 
@@ -48,6 +48,15 @@ Från projektspecifikationen, avsnitt 4:
 
 Ur direktivet, K7(a) och (f): testfallen för K4 och K5 ska vara committade innan implementationen av respektive krav, och varje backlog-post görs i en egen gren med en granskad pull request.
 
+### Lab 3: rundan och dina gränser
+
+- **Rundan per backlog-post:** PO väljer posten → TPL skriver uppdraget → PO skapar grenen och skriver testfallen i docs/testprotokoll.docx → kodagenten kodar testerna, och de committas röda → kodagenten implementerar → TPL granskar rapporten och diffen (godkänn / begär ändring / gör om) → PO beslutar, committar, pushar och öppnar en pull request som en annan medlem granskar → rundan förs in i AI-loggen.
+- **Grenar:** `issue-<nr>-K<krav>-<kort-namn>`, till exempel `issue-1-K1-entiteter`. **Commits:** `#<nr> K<krav>: <vad>`.
+- **Varje uppdrag till kodagenten anger:** backlog-post och issue-nummer, krav och AK-nummer, berörda filer, vad som inte får ändras, vilket avsnitt i design.md (och design-extern.md för K6) som gäller, hur resultatet verifieras (`npm test` och vilka tester) och vilken rapport PO vill ha.
+- **TPL skriver inte:** testfallen, konsekvensanalysen för ÄB1 (docs/ab1_konsekvensanalys.docx), progressrapporten eller, om PO inte ber om det, AI-loggen och den här briefen. TPL får kartlägga vilka filer och tester ÄB1 påverkar om PO ber om det.
+- **ÄB1:** konsekvensanalysen committas före den första kodändringen. Testerna för AK10.a–c, bland dem ett som öppnar en fil i format version 1, committas före koden.
+- **Startprompterna** till kodagenten och designer-AI skrevs 2026-11-25 (se AI-loggen).
+
 ---
 
 ## 2 Projektet i korthet
@@ -59,6 +68,7 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 - JavaScript (ECMAScript 2022+), React 19, Vite, Node.js 22 LTS eller senare.
 - Tester med Vitest och React Testing Library.
 - Starta med `npm run start` och testa med `npm test`.
+- Godkända beroenden (PO 2026-11-25): react, react-dom, vite, @vitejs/plugin-react, vitest, @testing-library/react, @testing-library/jest-dom och jsdom. Andra beroenden kräver PO:s godkännande.
 - Grafiskt gränssnitt (GUI) i webbläsaren, på svenska.
 - Moduler i repots rot:
 
@@ -104,7 +114,8 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 |---|---|---|
 | AGENTS.md | Regler för AI-agenterna i repot | PO |
 | docs/design.docx | Design (klassdiagram, modulkontrakt, algoritm K4, filformat K5) | PO |
-| docs/design.md | Markdown-version av design.docx (gjord 2026-11-25) | TPL, ordagrant, på begäran |
+| docs/design.md | Markdown-version av design.docx (synkad 2026-11-25; klassdiagrammet står som [bild]) | TPL, ordagrant, på begäran |
+| docs/testprotokoll.docx | Testprotokoll: testfall per AK och körningar av testsviten (mall skapad 2026-11-25) | PO |
 | docs/design-extern.md | Extern designspecifikation, v1.1, godkänd av PO 2026-11-20 | Designer-AI |
 | docs/kravanalys.docx | Annoterad kravspec | PO |
 | docs/projektspecifikation.docx | Backlog, sprintplan, risker och kommunikationsplan | PO |
@@ -122,10 +133,11 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 
 - Lab 2: designen är fastlagd och design-extern.md v1.1 är godkänd efter två designer-runder.
 - Repots skelett finns: modulkataloger, README-utkast, .gitignore och .gitattributes (Codex).
+- Lab 3 har startat (2026-11-25): startprompterna är skrivna, testprotokollet finns som mall och design.md är synkad med design.docx.
 
 **Pågår**
 
-- Sprint 1 (23–30 nov): K1–K5, grundläggande delar av K6 och löpande arbete med K7.
+- Sprint 1 (23–30 nov), i sprintplanens ordning: #7 (uppsättning: package.json och beroenden), #1 K1, #2 K2, #3 K3, #4 K4, #5 K5, sedan #6 K6. Ingen kod finns ännu. Progressrapport 30 nov 12:00.
 - Sprint 2 (30 nov–7 dec): resten av K6–K7, ÄB1 (K10) och om möjligt K8–K9. ÄB1 lämnas vid handledningen 30 nov och kräver en konsekvensanalys som backlog-post innan första commit (AK10.1).
 
 **Kommande leveranser**
@@ -142,22 +154,25 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 | 1 | Zonkodens format: finns det en formatregel, och likställs stora och små bokstäver? (Ö2) | Beställaren | F22 i design-extern.md, validering i model/, K5 |
 | 2 | Hör ett tillfälle som slutar exakt 00:00 till rapporten för sluttidens datum eller för föregående dygn? | Beställaren | K4 regel 3, dygnsrapporten och testfall för AK4.4 |
 
-Har frågorna ställts? Har de besvarats? Kontrollera bestallarbeslut.docx.
+Status 2026-11-25: båda frågorna väntar på svar från beställaren. Kontrollera bestallarbeslut.docx.
 
 ---
 
 ## 6 Kända luckor och nästa steg
 
-- **Klassdiagrammet i design.docx** saknar metoder som design-extern.md förutsätter:
+- **Klassdiagrammet i design.docx** saknar fortfarande (kontrollerat 2026-11-25, både tabellen och bilden), med modulkontrakt, metoder som design-extern.md förutsätter:
   - ändra och ta bort zon och fordon,
   - rätta starttid och ändra sluttid,
   - tillfällen för ett fordon,
   - en lista över zontyper.
 
-  Utökningspunkten för AK3.3 är ifylld (Pendlarzon via Zontyps register). PO uppdaterar design.docx med metoderna ovan, och därefter gör TPL om den till docs/design.md igen.
+  Det stoppar #1 och #2 (arbetsregel 3). PO uppdaterar design.docx, och därefter gör TPL om design.md igen.
+- **Småfel i design.docx:** utökningspunkten nämner Meny i stället för App, och kontraktet anger `beraknaAvgift()` utan parameter (`beraknaAvgift(sluttid)` i tabellen och pseudokoden).
+- **Projektdirektivet (PDF)** finns inte i repot. Bifoga det i TPL-tråden innan uppdrag skrivs, så att AK-texterna kan läsas ordagrant.
 - **Designer-runda 3**, när fråga 1 i avsnitt 5 är besvarad:
   - ge F22 sin text,
   - byt rubriken i avsnitt 1.4 ("till PO" ska bli "till beställaren"),
   - ändra K10 så att exemplet visar ett annat klockslag än det befintliga,
   - använd samma fordonsbeskrivningar som i exemplet på filformatet i design.docx.
 - **Testfall för K4 och K5** ska skrivas och committas innan implementationen av K4 och K5 börjar (K7(a)).
+- **Lab-instruktionens riktvärde** för sprint 1 är K1–K3, K6, K4, K5. PO har beslutat att följa sprintplanen (K1–K5, sedan K6).
