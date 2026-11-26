@@ -119,7 +119,7 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 | AGENTS.md | Regler för AI-agenterna i repot | PO |
 | docs/design.docx | Design (klassdiagram, modulkontrakt, algoritm K4, filformat K5) | PO |
 | docs/design.md | Markdown-version av design.docx (synkad 2026-11-25; klassdiagrammet står som [bild]) | TPL, ordagrant, på begäran |
-| docs/testprotokoll.docx | Testprotokoll: testfall per AK och körningar av testsviten (mall skapad 2026-11-25) | PO |
+| docs/testprotokoll.docx | Testprotokoll: testfall per AK och körningar av testsviten (mall skapad 2026-11-25; testfall för #3 ifyllda, TF10–TF27, TF34 och X1–X7 påbörjade) | PO |
 | docs/design-extern.md | Extern designspecifikation, v1.1, godkänd av PO 2026-11-20 | Designer-AI |
 | docs/kravanalys.docx | Annoterad kravspec | PO |
 | docs/projektspecifikation.docx | Backlog, sprintplan, risker och kommunikationsplan | PO |
@@ -139,6 +139,7 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 - Repots skelett finns: modulkataloger, README-utkast, .gitignore och .gitattributes (Codex).
 - Lab 3 har startat (2026-11-25): startprompterna (v3) är skrivna, testprotokollet finns som mall och design.md är synkad med design.docx.
 - Designer-AI har bekräftat startprompten (V1–V21) och väntar på runda 3.
+- #3 K3 (zontyper): implementerad på issue-3-K3-zontyper, 16 tester gröna (röd 2510a4e, grön f88edad). TPL föreslår godkänn (2026-11-26). Dubbletten testprotokoll-1.docx borttagen och ~$* tillagd i .gitignore (87985a5). Före PR: PO kör npm test, fyller i "Röd commit" och "Resultat" i testprotokollet, och en annan medlem än den som körde Codex granskar.
 - #7, del 1 (uppsättning): TPL föreslår godkänn efter ändring 1 (Node-krav). Grenen issue-7-K7-uppsattning. Före PR: slå ihop main i grenen, rätta den motsägelsefulla loggraden om vem som committar, PO kör npm install, npm test och npm run start, och en annan medlem än den som körde Codex granskar.
 
 **Pågår**
@@ -147,7 +148,8 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
   - Skäl: Zon kräver en Zontyp (#3), och Parkeringstillfälle.avsluta kräver beraknaAvgift (K4).
   - Omfång: #1 = model/ (Status, Tidpunkt, Zon, Fordon, Parkeringstillfälle inklusive beraknaAvgift). Testfallen för avgiften i K4 (AK4.1 avgifter, AK4.4) committas före #1:s implementation (K7(a)). #2 = Parkeringssystem i logic/. #4 = dygnsrapporten (AK4.1 rapporten, AK4.2, AK4.3). AK1.1 "via gränssnittet" verifieras fullt i #6.
   - Ändringen står i projektspecifikation.docx (stycket "Ändring av sprint 1" efter sprintplanen) och ska redovisas i progressrapporten.
-- Pågående uppdrag: #3 K3 (gren issue-3-K3-zontyper). PO klistrar in testfallen direkt under TPL:s uppdrag (Codex läser inte docx pålitligt) och för därefter in dem i testprotokollet.
+- Testfallen skickas med i uppdragen: PO klistrar in dem direkt under TPL:s uppdrag (Codex läser inte docx pålitligt) och för in dem i testprotokollet.
+- Nästa uppdrag: #1 K1 (model/ inklusive beraknaAvgift). Väntar på PO:s testfall för AK1.1–1.3 och avgiften i K4 (AK4.1 avgifter, AK4.4), som committas före implementationen.
 - Direktivet v1.3 finns lokalt i Downloads hos en medlem; bör läggas i docs/.
 - Sprint 2 (30 nov–7 dec): resten av K6–K7, ÄB1 (K10) och om möjligt K8–K9. ÄB1 lämnas vid handledningen 30 nov och kräver en konsekvensanalys som backlog-post innan första commit (AK10.1).
 
@@ -181,5 +183,7 @@ Status 2026-11-25: båda frågorna väntar på svar från beställaren. Kontroll
   - byt rubriken i avsnitt 1.4 ("till PO" ska bli "till beställaren"),
   - ändra K10 så att exemplet visar ett annat klockslag än det befintliga,
   - använd samma fordonsbeskrivningar som i exemplet på filformatet i design.docx.
+- **Zontypregistret:** Zontyp.register är en publik statisk Map som bara model/zontyper.js fyller. Zontyp.skapa fungerar bara om koden importerar från model/zontyper.js, så uppdragen för #1 och #2 ska ange den importen. Registret står i spänning mot regeln i AGENTS.md om globalt muterbart tillstånd; kan stängas senare om rättaren tar upp det.
+- **Testtäckning #3:** TF30–TF31 (ogiltiga minuter) provar bara zontyp A, fast B och Boende har egen validering. PO kan utöka.
 - **Testfall för K4 och K5** ska skrivas och committas innan implementationen av K4 och K5 börjar (K7(a)).
 - **Lab-instruktionens riktvärde** för sprint 1 är K1–K3, K6, K4, K5. PO har beslutat att följa sprintplanen (K1–K5, sedan K6).
