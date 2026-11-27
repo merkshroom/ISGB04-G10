@@ -150,6 +150,26 @@ export class Parkeringssystem {
     this.#tillfallen = tillfallen;
   }
 
+  dygnsrapport(datum) {
+    Tidpunkt.valideraDatum(datum);
+    const tillfallen = this.#tillfallen.filter((tillfalle) =>
+      (tillfalle.status === Status.AVSLUTAT || tillfalle.status === Status.BETALT)
+      && Tidpunkt.formateraTidpunkt(tillfalle.slut).slice(0, 10) === datum);
+    tillfallen.sort((a, b) => {
+      const avgift = b.avgift - a.avgift;
+      if (avgift !== 0) return avgift;
+      const start = a.start.getTime() - b.start.getTime();
+      if (start !== 0) return start;
+      const regnrA = a.fordon.regnr;
+      const regnrB = b.fordon.regnr;
+      if (regnrA < regnrB) return -1;
+      if (regnrA > regnrB) return 1;
+      return 0;
+    });
+    const summa = tillfallen.reduce((summa, tillfalle) => summa + tillfalle.avgift, 0);
+    return { tillfallen, summa };
+  }
+
   listaTillfallen(regnr) {
     const fordon = this.hamtaFordon(regnr);
     return this.#tillfallen
