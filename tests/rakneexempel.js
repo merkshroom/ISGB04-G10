@@ -1,6 +1,6 @@
 import { Parkeringssystem } from '../logic/Parkeringssystem.js';
 
-export function skapaRakneexempel() {
+export function skapaRakneexempel(ordning = [1, 2, 3, 4, 5, 6, 7, 8]) {
   const system = new Parkeringssystem();
   system.laggTillZon('A1', 'Torggatan', 'A');
   system.laggTillZon('B2', 'Pendlarvägen', 'B');
@@ -8,11 +8,11 @@ export function skapaRakneexempel() {
   for (const regnr of ['AAA 111', 'BBB 222', 'CCC 333', 'DDD 444']) {
     system.laggTillFordon(regnr, 'Röd Volvo');
   }
-  laggTillTillfallen(system);
+  laggTillTillfallen(system, ordning);
   return system;
 }
 
-function laggTillTillfallen(system) {
+function laggTillTillfallen(system, ordning) {
   const rader = [
     ['AAA 111', 'A1', '2026-11-24 10:00', '2026-11-24 12:00', 'BETALT'],
     ['BBB 222', 'A1', '2026-11-24 09:15', '2026-11-24 20:45', 'BETALT'],
@@ -23,7 +23,8 @@ function laggTillTillfallen(system) {
     ['AAA 111', 'A1', '2026-11-26 07:30', null, 'PAGAENDE'],
     ['CCC 333', 'A1', '2026-11-24 07:00', '2026-11-24 08:10', 'BETALT'],
   ];
-  for (const [regnr, zonkod, start, slut, status] of rader) {
+  for (const originalnummer of ordning) {
+    const [regnr, zonkod, start, slut, status] = rader[originalnummer - 1];
     const tillfalle = system.starta(regnr, zonkod, start);
     if (slut !== null) {
       system.avsluta(tillfalle.nr, slut);
