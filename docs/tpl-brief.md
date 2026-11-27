@@ -94,6 +94,8 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 
    Avgiften ändras aldrig för hand.
 3. **Ändra och ta bort zoner och fordon:** båda ska gå att göra i gränssnittet. Minst zonens gatunamn och fordonets beskrivning ska kunna ändras. Varje funktion ska ha en vy (AK6.4).
+4. **Zonkod (Ö2, svar 2026-11-27):** bokstäver och siffror, minst ett tecken; mellanslag och andra tecken godtas inte. Stora och små bokstäver likställs ("a1" = "A1"), och koden visas med versaler. Samma jämförelse vid start av tillfälle och vid öppning av fil.
+   - PO-beslut 2026-11-27: Å, Ä och Ö räknas som bokstäver, mellanslag nekas även före och efter koden, och koden lagras med versaler (design.docx avsnitt 7).
 
 ### PO-beslut om gränssnittet (docs/design-extern.md v1.1)
 
@@ -109,6 +111,7 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 
 - Avgiften sparas i filen och räknas inte om vid inläsning.
 - Ett tillfälle som slutar 00:00 hamnar i rapporten för sluttidens datum. Beslutet är provisoriskt tills beställaren har svarat.
+- Zonkoden: A–Z, Å, Ä, Ö och siffror, minst ett tecken, inga mellanslag. Lagras med versaler och jämförs efter omvandling (2026-11-27).
 
 ---
 
@@ -164,10 +167,9 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 
 | # | Fråga | Till | Påverkar |
 |---|---|---|---|
-| 1 | Zonkodens format: finns det en formatregel, och likställs stora och små bokstäver? (Ö2) | Beställaren | F22 i design-extern.md, validering i model/, K5 |
-| 2 | Hör ett tillfälle som slutar exakt 00:00 till rapporten för sluttidens datum eller för föregående dygn? | Beställaren | K4 regel 3, dygnsrapporten och testfall för AK4.4 |
+| 1 | Hör ett tillfälle som slutar exakt 00:00 till rapporten för sluttidens datum eller för föregående dygn? | Beställaren | K4 regel 3, dygnsrapporten och testfall för AK4.4 |
 
-Status 2026-11-25: båda frågorna väntar på svar från beställaren. Kontrollera bestallarbeslut.docx.
+Status 2026-11-27: Ö2 (zonkodens format) är besvarad, se beställarbeslut 4. Frågan ovan väntar fortfarande på svar. Kontrollera bestallarbeslut.docx.
 
 ---
 
@@ -178,8 +180,8 @@ Status 2026-11-25: båda frågorna väntar på svar från beställaren. Kontroll
   - **Tabellen och bilden:** design.docx kompletterad (commit 1a879be) och design.md synkad 2026-11-25. Parkeringstillfälle.andraStarttid/andraSluttid står utan nr i båda filerna (PO-beslut 2026-11-25).
 - **Småfel i design.docx och design.md:** utökningspunkten nämner Meny i stället för App.
 - **Projektdirektivet (PDF)** finns inte i repot. Bifoga det i TPL-tråden innan uppdrag skrivs, så att AK-texterna kan läsas ordagrant.
-- **Designer-runda 3**, när fråga 1 i avsnitt 5 är besvarad:
-  - ge F22 sin text,
+- **Designer-runda 3** kan starta (Ö2 besvarad 2026-11-27):
+  - ge F22 sin text och flytta Ö2 till de besvarade frågorna,
   - byt rubriken i avsnitt 1.4 ("till PO" ska bli "till beställaren"),
   - ändra K10 så att exemplet visar ett annat klockslag än det befintliga,
   - använd samma fordonsbeskrivningar som i exemplet på filformatet i design.docx.

@@ -246,7 +246,7 @@ Version 2 (fylls i vid ÄB1): [nytt fält, standardvärde för version 1-filer]
 | --- | --- | --- | --- |
 | 2026-11-17 | Avgiften sparas i filen istället för att räknas om vid inläsning | Gamla avgifter ska inte ändras om en regel ändras (ÄB1 b) | Avsnitt 6, storage |
 | 2026-11-17 | Ett tillfälle som slutar 00:00 hamnar i rapporten för sluttidens datum. Beslutet gäller tills beställaren har svarat. | Direktivet anger bara regeln för avgiften, inte för rapportdatumet | Avsnitt 5, beställarbeslut |
-|  |  |  |  |
+| 2026-11-27 | Zonkoden består av bokstäverna A–Z, Å, Ä och Ö samt siffror, minst ett tecken. Mellanslag och andra tecken nekas, även före och efter koden. Koden görs om till versaler och lagras så. Zonkoder jämförs efter omvandlingen. | Beställarens svar på Ö2 (beställarbeslut 4). Å, Ä och Ö, mellanslag och lagring med versaler är PO-beslut 2026-11-27. | Zon.valideraKod, Parkeringssystem (laggTillZon, hamtaZon, starta, andraZon, taBortZon), Filhanterare.oppna (avsnitt 6), F22 i design-extern.md |
 
 ### När designen är klar: textversion för kodagenten
 
