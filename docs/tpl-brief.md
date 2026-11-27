@@ -94,8 +94,10 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 
    Avgiften ändras aldrig för hand.
 3. **Ändra och ta bort zoner och fordon:** båda ska gå att göra i gränssnittet. Minst zonens gatunamn och fordonets beskrivning ska kunna ändras. Varje funktion ska ha en vy (AK6.4).
+4. **Zonkod (Ö2, svar 2026-11-27):** bokstäver och siffror, minst ett tecken; mellanslag och andra tecken godtas inte. Stora och små bokstäver likställs ("a1" = "A1"), och koden visas med versaler. Samma jämförelse vid start av tillfälle och vid öppning av fil.
+   - PO-beslut 2026-11-27: Å, Ä och Ö räknas som bokstäver, mellanslag nekas även före och efter koden, och koden lagras med versaler (design.docx avsnitt 7).
 
-### PO-beslut om gränssnittet (docs/design-extern.md v1.1)
+### PO-beslut om gränssnittet (docs/design-extern.md v1.2)
 
 - Bara zonens gatunamn och fordonets beskrivning kan ändras. Zonkod, zontyp och registreringsnummer är låsta.
 - Registrera betalning har inga indata, bara en bekräftelse.
@@ -104,11 +106,13 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 - Användaren varnas för osparade ändringar.
 - I dygnsrapporten visas Start med datum om starten ligger ett annat datum än rapportdatumet.
 - I vyn Hantera tillfälle är alla knappar alltid aktiva, och logikdelen nekar otillåtna övergångar.
+- Zonkod (v1.2, 2026-11-27): "a1" tolkas som "A1" och koden visas med versaler. En ogiltig zonkod, även en med bara mellanslag, ger F22; F20 gäller bara ett helt tomt fält. F22 räknas som formatfel och kontrolleras före F03, även i Starta tillfälle. F09 gäller även när koden bara skiljer sig i skiftläge.
 
 ### Gruppens designbeslut (docs/design.docx, avsnitt 7)
 
 - Avgiften sparas i filen och räknas inte om vid inläsning.
 - Ett tillfälle som slutar 00:00 hamnar i rapporten för sluttidens datum. Beslutet är provisoriskt tills beställaren har svarat.
+- Zonkoden: A–Z, Å, Ä, Ö och siffror, minst ett tecken, inga mellanslag. Lagras med versaler och jämförs efter omvandling (2026-11-27).
 
 ---
 
@@ -119,8 +123,8 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 | AGENTS.md | Regler för AI-agenterna i repot | PO |
 | docs/design.docx | Design (klassdiagram, modulkontrakt, algoritm K4, filformat K5) | PO |
 | docs/design.md | Markdown-version av design.docx (synkad 2026-11-25; klassdiagrammet står som [bild]) | TPL, ordagrant, på begäran |
-| docs/testprotokoll.docx | Testprotokoll: testfall per AK och körningar av testsviten (mall skapad 2026-11-25; testfall för #3 ifyllda, TF10–TF27, TF34 och X1–X7 påbörjade) | PO |
-| docs/design-extern.md | Extern designspecifikation, v1.1, godkänd av PO 2026-11-20 | Designer-AI |
+| docs/testprotokoll.docx | Testprotokoll: testfall per AK och körningar av testsviten. v0.3 (2026-11-27): testfall för #3 och #1 ifyllda (#1: TF10–TF14, TF15a, TF34–TF37, X1–X4, X8–X19); TF15b–TF27 och X5–X7 för #2, #4 och #5 påbörjade | PO |
+| docs/design-extern.md | Extern designspecifikation, v1.2 (330fde7), anger godkänd av PO 2026-11-27 | Designer-AI |
 | docs/kravanalys.docx | Annoterad kravspec | PO |
 | docs/projektspecifikation.docx | Backlog, sprintplan, risker och kommunikationsplan | PO |
 | docs/bestallarbeslut.docx | Frågor till beställaren och svaren | PO |
@@ -138,7 +142,8 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 - Lab 2: designen är fastlagd och design-extern.md v1.1 är godkänd efter två designer-runder.
 - Repots skelett finns: modulkataloger, README-utkast, .gitignore och .gitattributes (Codex).
 - Lab 3 har startat (2026-11-25): startprompterna (v3) är skrivna, testprotokollet finns som mall och design.md är synkad med design.docx.
-- Designer-AI har bekräftat startprompten (V1–V21) och väntar på runda 3.
+- Designer-AI har bekräftat startprompten (V1–V21).
+- Designer-runda 3: design-extern.md v1.2 (330fde7). Ö2 besvarad, Ö8 (sluttid 00:00) öppen, F22 har text, K10 och T16 rättade. TPL föreslår godkänn (2026-11-27).
 - #3 K3 (zontyper): implementerad på issue-3-K3-zontyper, 16 tester gröna (röd 2510a4e, grön f88edad). TPL föreslår godkänn (2026-11-26). Dubbletten testprotokoll-1.docx borttagen och ~$* tillagd i .gitignore (87985a5). Före PR: PO kör npm test, fyller i "Röd commit" och "Resultat" i testprotokollet, och en annan medlem än den som körde Codex granskar.
 - #7, del 1 (uppsättning): TPL föreslår godkänn efter ändring 1 (Node-krav). Grenen issue-7-K7-uppsattning. Före PR: slå ihop main i grenen, rätta den motsägelsefulla loggraden om vem som committar, PO kör npm install, npm test och npm run start, och en annan medlem än den som körde Codex granskar.
 
@@ -149,7 +154,7 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
   - Omfång: #1 = model/ (Status, Tidpunkt, Zon, Fordon, Parkeringstillfälle inklusive beraknaAvgift). Testfallen för avgiften i K4 (AK4.1 avgifter, AK4.4) committas före #1:s implementation (K7(a)). #2 = Parkeringssystem i logic/. #4 = dygnsrapporten (AK4.1 rapporten, AK4.2, AK4.3). AK1.1 "via gränssnittet" verifieras fullt i #6.
   - Ändringen står i projektspecifikation.docx (stycket "Ändring av sprint 1" efter sprintplanen) och ska redovisas i progressrapporten.
 - Testfallen skickas med i uppdragen: PO klistrar in dem direkt under TPL:s uppdrag (Codex läser inte docx pålitligt) och för in dem i testprotokollet.
-- Nästa uppdrag: #1 K1 (model/ inklusive beraknaAvgift). Väntar på PO:s testfall för AK1.1–1.3 och avgiften i K4 (AK4.1 avgifter, AK4.4), som committas före implementationen.
+- Pågående uppdrag: #1 K1 (model/ inklusive beraknaAvgift) på issue-1-K1-entiteter. Testfallen är granskade (protokollet v0.3) och uppdraget skickat 2026-11-27. Kodagenten har frågat om X8–X19, TF37 och zonkodsregeln; röd fas inte påbörjad. Val i uppdraget som PO ska bekräfta: 24:00 nekas tills vidare, regnr bara A–Z, gatunamn och beskrivning med bara blanktecken räknas som tomma.
 - Direktivet v1.3 finns lokalt i Downloads hos en medlem; bör läggas i docs/.
 - Sprint 2 (30 nov–7 dec): resten av K6–K7, ÄB1 (K10) och om möjligt K8–K9. ÄB1 lämnas vid handledningen 30 nov och kräver en konsekvensanalys som backlog-post innan första commit (AK10.1).
 
@@ -164,10 +169,9 @@ Ett program för Älvstranden Parkering där parkeringsvakten lägger upp zoner 
 
 | # | Fråga | Till | Påverkar |
 |---|---|---|---|
-| 1 | Zonkodens format: finns det en formatregel, och likställs stora och små bokstäver? (Ö2) | Beställaren | F22 i design-extern.md, validering i model/, K5 |
-| 2 | Hör ett tillfälle som slutar exakt 00:00 till rapporten för sluttidens datum eller för föregående dygn? | Beställaren | K4 regel 3, dygnsrapporten och testfall för AK4.4 |
+| 1 | Hör ett tillfälle som slutar exakt 00:00 till rapporten för sluttidens datum eller för föregående dygn? | Beställaren | K4 regel 3, dygnsrapporten och testfall för AK4.4 |
 
-Status 2026-11-25: båda frågorna väntar på svar från beställaren. Kontrollera bestallarbeslut.docx.
+Status 2026-11-27: Ö2 (zonkodens format) är besvarad, se beställarbeslut 4. Frågan ovan väntar fortfarande på svar. Kontrollera bestallarbeslut.docx.
 
 ---
 
@@ -178,12 +182,11 @@ Status 2026-11-25: båda frågorna väntar på svar från beställaren. Kontroll
   - **Tabellen och bilden:** design.docx kompletterad (commit 1a879be) och design.md synkad 2026-11-25. Parkeringstillfälle.andraStarttid/andraSluttid står utan nr i båda filerna (PO-beslut 2026-11-25).
 - **Småfel i design.docx och design.md:** utökningspunkten nämner Meny i stället för App.
 - **Projektdirektivet (PDF)** finns inte i repot. Bifoga det i TPL-tråden innan uppdrag skrivs, så att AK-texterna kan läsas ordagrant.
-- **Designer-runda 3**, när fråga 1 i avsnitt 5 är besvarad:
-  - ge F22 sin text,
-  - byt rubriken i avsnitt 1.4 ("till PO" ska bli "till beställaren"),
-  - ändra K10 så att exemplet visar ett annat klockslag än det befintliga,
-  - använd samma fordonsbeskrivningar som i exemplet på filformatet i design.docx.
+- **Designer-runda 3 klar** (v1.2). Kvar, valfritt: exempelvärdet i F22 står inom citattecken till skillnad från F03 och F09; raden om tillfälle 6 i avsnitt 3 kan hänvisa till Ö8; "både i kvitton, listor och förslagslistan" i Lägg till zon. Rad 4 säger "godkänd av PO 2026-11-27" och får bara stå om PO har godkänt.
+- **Grenarna har glidit isär:** issue-1-K1-entiteter saknar issue-3-K3-zontypers commitar efter 20b6387. design.md avsnitt 7 har en rad om zonkoden på båda grenarna, med olika text (9e5c32b på issue-1, e19580a på issue-3). Raden på issue-1 nämner inte Å/Ä/Ö, att koden inte trimmas eller att den lagras med versaler. Vid sammanslagning ska bara en rad finnas kvar.
 - **Zontypregistret:** Zontyp.register är en publik statisk Map som bara model/zontyper.js fyller. Zontyp.skapa fungerar bara om koden importerar från model/zontyper.js, så uppdragen för #1 och #2 ska ange den importen. Registret står i spänning mot regeln i AGENTS.md om globalt muterbart tillstånd; kan stängas senare om rättaren tar upp det.
+- **Avvikelse från AGENTS.md (PO-beslut 2026-11-27):** X15–X17 (statusövergångar i K1) har testnamn utan AK-nummer (test_K1_…), eftersom K1-texten och inte ett AK kräver dem. Tas upp i spårbarhetsmatrisen och slutrapporten.
+- **Väntar:** testfall för zonkoden i #2 (dubblett med annat skiftläge, start med "a1") och #5 (inläsning). Tidpunkt saknar egna testfall i #1 och testas indirekt i #5.
 - **Testtäckning #3:** TF30–TF31 (ogiltiga minuter) provar bara zontyp A, fast B och Boende har egen validering. PO kan utöka.
 - **Testfall för K4 och K5** ska skrivas och committas innan implementationen av K4 och K5 börjar (K7(a)).
 - **Lab-instruktionens riktvärde** för sprint 1 är K1–K3, K6, K4, K5. PO har beslutat att följa sprintplanen (K1–K5, sedan K6).
