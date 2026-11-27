@@ -29,6 +29,27 @@ export class Parkeringstillfalle {
     this.#start = new Date(start.getTime());
   }
 
+  static aterstall(nr, fordon, zon, start, slut, status, avgift) {
+    const tillfalle = new Parkeringstillfalle(nr, fordon, zon, start);
+    if (!Object.values(Status).includes(status)) {
+      throw new Error(`Okänd status: ${String(status)}.`);
+    }
+    if (status === Status.PAGAENDE) {
+      if (slut !== null || avgift !== null) {
+        throw new Error(`Status ${status} kräver att sluttid och avgift saknas.`);
+      }
+    } else {
+      Tidpunkt.valideraTidsintervall(start, slut);
+      if (!Number.isInteger(avgift) || avgift < 0) {
+        throw new Error(`Ogiltig avgift: ${String(avgift)} för status ${status}.`);
+      }
+    }
+    tillfalle.#slut = slut === null ? null : new Date(slut.getTime());
+    tillfalle.#status = status;
+    tillfalle.#avgift = avgift;
+    return tillfalle;
+  }
+
   get nr() {
     return this.#nr;
   }
