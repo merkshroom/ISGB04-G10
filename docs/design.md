@@ -246,6 +246,7 @@ Version 2 (fylls i vid ÄB1): [nytt fält, standardvärde för version 1-filer]
 | --- | --- | --- | --- |
 | 2026-11-17 | Avgiften sparas i filen istället för att räknas om vid inläsning | Gamla avgifter ska inte ändras om en regel ändras (ÄB1 b) | Avsnitt 6, storage |
 | 2026-11-17 | Ett tillfälle som slutar 00:00 hamnar i rapporten för sluttidens datum. Beslutet gäller tills beställaren har svarat. | Direktivet anger bara regeln för avgiften, inte för rapportdatumet | Avsnitt 5, beställarbeslut |
+|2026-11-27 | En zons kod får inte innehålla mellanslag eller andra tecken än nummer och bokstäver. Zoner ska alltid visas med stora versaler | Beställarbeslut | Avsnitt 3, klassdiagram |
 |  |  |  |  |
 
 ### När designen är klar: textversion för kodagenten
