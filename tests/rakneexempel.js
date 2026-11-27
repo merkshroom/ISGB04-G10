@@ -5,8 +5,11 @@ export function skapaRakneexempel(ordning = [1, 2, 3, 4, 5, 6, 7, 8]) {
   system.laggTillZon('A1', 'Torggatan', 'A');
   system.laggTillZon('B2', 'Pendlarvägen', 'B');
   system.laggTillZon('BO', 'Strandvägen', 'BOENDE');
-  for (const regnr of ['AAA 111', 'BBB 222', 'CCC 333', 'DDD 444']) {
-    system.laggTillFordon(regnr, 'Röd Volvo');
+  for (const [regnr, beskrivning] of [
+    ['AAA 111', 'Röd Volvo'], ['BBB 222', 'Vit Saab'],
+    ['CCC 333', 'Röd kombi'], ['DDD 444', 'Blå skåpbil'],
+  ]) {
+    system.laggTillFordon(regnr, beskrivning);
   }
   laggTillTillfallen(system, ordning);
   return system;
