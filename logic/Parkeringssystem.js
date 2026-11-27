@@ -4,6 +4,7 @@ import { Parkeringstillfalle } from '../model/Parkeringstillfalle.js';
 import { Tidpunkt } from '../model/Tidpunkt.js';
 import { Status } from '../model/Status.js';
 import { Zontyp } from '../model/zontyper.js';
+import { kontrolleraData } from './Datakontroll.js';
 
 export class Parkeringssystem {
   #zoner = [];
@@ -168,6 +169,18 @@ export class Parkeringssystem {
     });
     const summa = tillfallen.reduce((summa, tillfalle) => summa + tillfalle.avgift, 0);
     return { tillfallen, summa };
+  }
+
+  ersattData(data) {
+    kontrolleraData(data);
+    const zoner = [...data.zoner];
+    const fordon = [...data.fordon];
+    const tillfallen = [...data.tillfallen];
+    const nastaNummer = tillfallen.reduce((hogst, p) => Math.max(hogst, p.nr), 0) + 1;
+    this.#zoner = zoner;
+    this.#fordon = fordon;
+    this.#tillfallen = tillfallen;
+    this.#nastaTillfallesnummer = nastaNummer;
   }
 
   listaTillfallen(regnr) {

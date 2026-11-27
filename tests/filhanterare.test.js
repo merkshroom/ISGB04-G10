@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { File } from 'node:buffer';
-import { URL } from 'node:url';
+import { resolve } from 'node:path';
 import { expect, test } from 'vitest';
 import { Filhanterare, FilformatFel } from '../storage/Filhanterare.js';
 import { Parkeringssystem } from '../logic/Parkeringssystem.js';
@@ -9,7 +9,7 @@ import { Tidpunkt } from '../model/Tidpunkt.js';
 import { skapaRakneexempel } from './rakneexempel.js';
 
 function exempeltext() {
-  return readFileSync(new URL('../docs/exempel/rakneexempel.txt', import.meta.url), 'utf8');
+  return readFileSync(resolve('docs/exempel/rakneexempel.txt'), 'utf8');
 }
 
 function skapaFil(text) {
