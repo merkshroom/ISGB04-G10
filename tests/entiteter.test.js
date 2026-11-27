@@ -12,7 +12,7 @@ function skapaTillfalle(nr = 1, start = '2026-11-24 10:00') {
   return new Parkeringstillfalle(nr, fordon, zon, Tidpunkt.tolkaTidpunkt(start));
 }
 
-test('test_AK1_1_mellanslag', () => {
+test('test_AK1_1_otillatna_zonkoder', () => {
   const zontyp = Zontyp.skapa('A');
   for (const kod of ['A 1', 'B1 ', '', ' C1', 'D-1']) {
     expect(() => new Zon(kod, 'Storgatan', zontyp)).toThrow();
