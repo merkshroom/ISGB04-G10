@@ -1,16 +1,17 @@
 # Extern designspecifikation – Parkeringsavgifterna (K6)
 
 Projektgrupp G10, ISGB04 Programutveckling, Karlstads universitet, HT 2026
-Version 1.1, godkänd av PO 2026-11-20
+Version 1.2, godkänd av PO 2026-11-27
 
 **Ändringslogg**
 
 | Version | Datum | Ändring |
 |---|---|---|
+| 1.2 | 2026-11-27 | Ö2 är besvarad (beställarbeslut 4 och PO-beslut 2026-11-27) och flyttad till de besvarade frågorna. Avsnitt 1.4 heter nu "Öppna frågor till beställaren" och har den nya frågan Ö8 (sluttid 00:00). F22 har fått sin text och gäller även en kod med bara mellanslag. V3 och V11 anger att en zonkod med små bokstäver tolkas med stora och visas med versaler, och att F09 gäller även när koden bara skiljer sig i skiftläge. V11 ger F22, och F22 står bland formatfelen i felordningen. K10 visar en rättad starttid som skiljer sig från den gamla, och avsnitt 4 räknar K10 bland texterna med illustrerade värden. T16 använder fordonsbeskrivningen "Röd Volvo" från design.md avsnitt 6. |
 | 1.1 | 2026-11-20 | PO-beslut för Ö1 och Ö3–Ö7 är införda, och markeringarna "förslag" är borttagna. Avsnitt 1.4 innehåller bara Ö2. Alla exempel bygger på direktivets räkneexempel (tillfälle 1–8), som nu finns i avsnitt 3. V18 har fått ett exempel på Ö7. F23 heter nu F22, så numreringen saknar lucka. |
 | 1.0 | 2026-11-20 | Första utkast. |
 
-Den enda öppna frågan, Ö2, finns i avsnitt 1.4.
+Den enda öppna frågan, Ö8, finns i avsnitt 1.4. Ö2 är besvarad (beställarbeslut 4).
 
 ---
 
@@ -77,9 +78,17 @@ Därför visas avgift och status alltid tydligt, och det finns inget fält där 
 - **Efter lyckad åtgärd eller Avbryt:** formuläret stängs och användaren är tillbaka i listan i samma vy.
 - **Borttagning:** kräver alltid en bekräftelse, där **Avbryt** har fokus från början.
 
-### 1.4 Öppna frågor till PO
+### 1.4 Öppna frågor till beställaren
 
-- **Ö2 Zonkodens format.** Väntar på beställarens svar. Finns det en formatregel för zonkoden, och likställs stora och små bokstäver? Tills vidare kontrolleras bara att fältet inte är tomt och att zonkoden inte redan finns. Felmeddelande F22 får sin text när frågan är besvarad.
+- **Ö8 Rapportdatum vid sluttid 00:00.** Väntar på beställarens svar. Vilket rapportdatum hör ett tillfälle till om det slutar exakt 00:00? Provisoriskt PO-beslut (design.docx avsnitt 7, 2026-11-17): tillfället hamnar i rapporten för sluttidens datum.
+
+**Besvarade frågor**
+
+- **Ö2 Zonkodens format.** Besvarad 2026-11-27 i beställarbeslut 4, med PO-beslut samma dag.
+  - Zonkoden består av bokstäver och siffror och har minst ett tecken. Å, Ä och Ö räknas som bokstäver.
+  - Mellanslag och andra tecken godtas inte, inte heller före eller efter koden. Ingen trimning görs. En ogiltig kod ger F22, också en kod med bara mellanslag. F20 gäller bara ett helt tomt fält.
+  - Stora och små bokstäver likställs: "a1" och "A1" är samma zon, och en ny zon "a1" nekas om "A1" finns (F09). Koden lagras och visas med versaler.
+  - Samma jämförelse gäller när en zonkod skrivs in vid start av ett tillfälle och när en fil öppnas.
 
 ---
 
@@ -187,15 +196,15 @@ Lägg till zon
 
 - **Nås från:** V2, knappen "Lägg till zon". Formuläret visas under zonlistan.
 - **Indata:**
-  - **Zonkod:** textfält.
+  - **Zonkod:** textfält. Logikdelen likställer stora och små bokstäver, så "a1" tolkas som "A1". Koden visas sedan alltid med versaler, både i kvitton, listor och förslagslistan.
   - **Gatunamn:** textfält.
   - **Zontyp:** vallista med de zontyper som programmet känner till. Listan hämtas från logikdelen, så att framtida zontyper visas utan ändring i gränssnittet. Inget värde är förvalt, och listan visar "Välj zontyp" tills användaren har valt.
   - Knapparna **Lägg till** och **Avbryt**.
 - **Utdata:** kvitto K01. Den nya zonen syns i listan.
 - **Felmeddelanden:**
   - F20: tomt fält eller ingen vald zontyp.
-  - F09: zonkoden finns redan.
-  - F22: ogiltig zonkod (Ö2).
+  - F09: zonkoden finns redan, även när den bara skiljer sig i skiftläge, till exempel "a1" när "A1" finns.
+  - F22: ogiltig zonkod, även en kod med bara mellanslag. F20 gäller bara ett helt tomt fält.
 
 ### V4 Ändra zon
 
@@ -288,7 +297,7 @@ Tillfällen                 [Starta tillfälle] [Visa tillfällen för ett fordo
 - **Nås från:** V10, knappen "Starta tillfälle".
 - **Indata:**
   - **Fordon:** registreringsnummer i ett textfält. Förslagslistan visar alla fordon som "AAA 111 – beskrivning".
-  - **Zon:** zonkod i ett textfält. Förslagslistan visar alla zoner som "A1 Torggatan (A)".
+  - **Zon:** zonkod i ett textfält. Förslagslistan visar alla zoner som "A1 Torggatan (A)". Logikdelen likställer stora och små bokstäver, så "a1" tolkas som "A1". Koden visas sedan alltid med versaler, både i kvittot och i listan.
   - **Startdatum:** ÅÅÅÅ-MM-DD.
   - **Starttid:** HH:MM.
   - Knapparna **Starta** och **Avbryt**.
@@ -296,6 +305,7 @@ Tillfällen                 [Starta tillfälle] [Visa tillfällen för ett fordo
 - **Felmeddelanden:**
   - F07: ogiltigt registreringsnummer.
   - F01: fordonet finns inte.
+  - F22: ogiltig zonkod, även en kod med bara mellanslag.
   - F03: zonkoden finns inte.
   - F06: fordonet har redan ett Pågående tillfälle.
   - F18, F19, F20.
@@ -461,10 +471,11 @@ Dygnsrapport 2026-11-24
 
 Exempelvärden inom klamrar, `{...}`, ersätts med verkliga värden när texten visas. Prefixet "Fel:" eller "Klart:" visas i meddelanderutan framför texten.
 
-Exempelvärdena följer räkneexemplet i avsnitt 3. Tre texter beskriver lägen som inte finns i exemplet, och där är värdena bara illustrationer:
+Exempelvärdena följer räkneexemplet i avsnitt 3. Fyra texter beskriver lägen som inte finns i exemplet, och där är värdena bara illustrationer:
 
 - **K03:** ingen zon i exemplet kan tas bort, eftersom alla zoner har tillfällen som är Pågående eller Avslutade.
 - **T17:** alla fordon i exemplet har tillfällen.
+- **K10:** ingen starttid rättas i exemplet. Den rättade starttiden 07:15 är påhittad.
 - **K11:** den tidigare avgiften finns inte i exemplet.
 
 ### 4.1 Rubriker, menyval och knappar
@@ -491,7 +502,7 @@ Exempelvärdena följer räkneexemplet i avsnitt 3. Tre texter beskriver lägen 
 | T13 | Inga zoner finns. Välj Lägg till zon. |
 | T14 | Inga fordon finns. Välj Lägg till fordon. |
 | T15 | Inga tillfällen finns. Välj Starta tillfälle. |
-| T16 | Tillfällen för {AAA 111} – {Blå personbil} |
+| T16 | Tillfällen för {AAA 111} – {Röd Volvo} |
 | T17 | Fordonet {EEE 555} har inga tillfällen. |
 | T18 | Dygnsrapport {2026-11-24} |
 | T19 | Inga avslutade tillfällen detta datum. |
@@ -522,7 +533,7 @@ Exempelvärdena följer räkneexemplet i avsnitt 3. Tre texter beskriver lägen 
 | K07 | Tillfälle {7} har startats för {AAA 111} i zon {A1}. |
 | K08 | Tillfälle {3} har avslutats. Avgift: {40} kr. |
 | K09 | Betalning har registrerats för tillfälle {3}. |
-| K10 | Starttiden för tillfälle {7} har rättats till {2026-11-26 07:30}. |
+| K10 | Starttiden för tillfälle {7} har rättats till {2026-11-26 07:15}. |
 | K11 | Sluttiden för tillfälle {4} har ändrats. Ny avgift: {90} kr (tidigare {tidigare avgift} kr). |
 | K12 | Data har sparats till {parkering.txt}. |
 | K13 | Filen {parkering.txt} har öppnats: {3} zoner, {4} fordon och {8} tillfällen. |
@@ -554,9 +565,9 @@ De tre felen som AK6.2 kräver är F01, F02 och F03.
 | F19 | Ogiltigt klockslag | Ogiltigt klockslag: "{9.15}". Ange klockslag som HH:MM, till exempel 09:15. |
 | F20 | Tomt obligatoriskt fält | {Gatunamn} måste fyllas i. |
 | F21 | Sparandet misslyckades | Filen kunde inte sparas: {orsak}. Inga data har ändrats. |
-| F22 | Ogiltig zonkod (Ö2) | Texten bestäms när Ö2 är besvarad. |
+| F22 | Ogiltig zonkod | Zonkoden "{A-1}" är ogiltig. Använd bara bokstäver och siffror, utan mellanslag eller andra tecken. |
 
-Om ett fält kan ge flera fel visas bara det första, i den här ordningen: F20 (tomt), F18, F19 eller F07 (format), F01 eller F03 (finns inte) och sist statusfelen.
+Om ett fält kan ge flera fel visas bara det första, i den här ordningen: F20 (tomt), F18, F19, F07 eller F22 (format), F01 eller F03 (finns inte) och sist statusfelen.
 
 ---
 
