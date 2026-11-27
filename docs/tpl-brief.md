@@ -186,6 +186,8 @@ Status 2026-11-27: Ö2 (zonkodens format) är besvarad, se beställarbeslut 4. F
   - ändra K10 så att exemplet visar ett annat klockslag än det befintliga,
   - använd samma fordonsbeskrivningar som i exemplet på filformatet i design.docx.
 - **Zontypregistret:** Zontyp.register är en publik statisk Map som bara model/zontyper.js fyller. Zontyp.skapa fungerar bara om koden importerar från model/zontyper.js, så uppdragen för #1 och #2 ska ange den importen. Registret står i spänning mot regeln i AGENTS.md om globalt muterbart tillstånd; kan stängas senare om rättaren tar upp det.
+- **Avvikelse från AGENTS.md (PO-beslut 2026-11-27):** X15–X17 (statusövergångar i K1) har testnamn utan AK-nummer (test_K1_…), eftersom K1-texten och inte ett AK kräver dem. Tas upp i spårbarhetsmatrisen och slutrapporten.
+- **Väntar:** testfall för zonkoden i #2 (dubblett med annat skiftläge, start med "a1") och #5 (inläsning). Tidpunkt saknar egna testfall i #1 och testas indirekt i #5.
 - **Testtäckning #3:** TF30–TF31 (ogiltiga minuter) provar bara zontyp A, fast B och Boende har egen validering. PO kan utöka.
 - **Testfall för K4 och K5** ska skrivas och committas innan implementationen av K4 och K5 börjar (K7(a)).
 - **Lab-instruktionens riktvärde** för sprint 1 är K1–K3, K6, K4, K5. PO har beslutat att följa sprintplanen (K1–K5, sedan K6).
