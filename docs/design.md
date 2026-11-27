@@ -246,11 +246,9 @@ Version 2 (fylls i vid ÄB1): [nytt fält, standardvärde för version 1-filer]
 | --- | --- | --- | --- |
 | 2026-11-17 | Avgiften sparas i filen istället för att räknas om vid inläsning | Gamla avgifter ska inte ändras om en regel ändras (ÄB1 b) | Avsnitt 6, storage |
 | 2026-11-17 | Ett tillfälle som slutar 00:00 hamnar i rapporten för sluttidens datum. Beslutet gäller tills beställaren har svarat. | Direktivet anger bara regeln för avgiften, inte för rapportdatumet | Avsnitt 5, beställarbeslut |
-|2026-11-27 | En zons kod får inte innehålla mellanslag eller andra tecken än nummer och bokstäver. Zoner ska alltid visas med stora versaler | Beställarbeslut | Avsnitt 3, klassdiagram |
-|  |  |  |  |
+| 2026-11-27 | Zonkoden består av bokstäverna A–Z, Å, Ä och Ö samt siffror, minst ett tecken. Mellanslag och andra tecken nekas, även före och efter koden. Koden görs om till versaler och lagras så. Zonkoder jämförs efter omvandlingen. | Beställarens svar på Ö2 (beställarbeslut 4). Å, Ä och Ö, mellanslag och lagring med versaler är PO-beslut 2026-11-27. | Zon.valideraKod, Parkeringssystem (laggTillZon, hamtaZon, starta, andraZon, taBortZon), Filhanterare.oppna (avsnitt 6), F22 i design-extern.md |
 
 ### När designen är klar: textversion för kodagenten
 
 | Det här steget gör TPL åt er – men bara omvandlingen, inte innehållet.<br>1. Klistra in eller ladda upp det här dokumentet hos TPL med uppdraget: ”Här är vår design. Gör om den till markdown ordagrant: samma rubriker, tabeller och formuleringar. Lägg inte till, ta inte bort och förbättra ingenting. Skriv [bild] där klassdiagrammets bild står. Svara bara med markdown-texten.”<br>2. Spara svaret som docs/design.md (ny fil i VS Code, klistra in, spara).<br>3. Läs textversionen mot det här dokumentet. Stämmer något inte: rätta i design.md eller be om en ny omvandling.<br>4. Committa båda filerna och notera omvandlingen i AI-loggen.<br>5. När designen ändras: ändra först här i Word-filen och gör sedan om steg 1–4. |
 | --- |
-
